@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+   
+    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 env-cmd -f .env.dev next --turbopack",
     "build": "next build",
     "start": "next start .env.development",
     "lint": "next lint"
@@ -12,6 +13,8 @@
     "@raphiniert/ra-data-postgrest": "^2.4.1",
     "axios": "^1.7.9",
     "browser-image-compression": "^2.0.2",
+    "cross-env": "^7.0.3",
+    "env-cmd": "^10.1.0",
     "localforage": "^1.10.0",
     "next": "15.1.3",
     "pluralize": "^8.0.0",
