@@ -10,7 +10,7 @@ const expressToken = isJSONParsable(user) ? JSON.parse(user).expressToken : "";
 
 // axiosInstance for Express Server
 export const axiosInstance: AxiosInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_EXPRESS_API_BASE_URL}/api/v1`,
+  baseURL: `${process.env.NEXT_PUBLIC_EXPRESS_API_BASE_URL}/api/v1`,
   headers: {
     Authorization: `Bearer ${expressToken}`,
   },

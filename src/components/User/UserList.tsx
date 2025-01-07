@@ -13,14 +13,10 @@ const PostPagination = () => (
 const postFilters = [<SearchInput source="name" alwaysOn />];
 
 export const UserList = () => (
-  <List
-    sort={{ field: "published_at", order: "DESC" }}
-    filters={postFilters}
-    pagination={<PostPagination />}
-  >
+  <List filters={postFilters} pagination={<PostPagination />}>
     <Datagrid>
       <TextField source="id" />
-      <TextField source="name" />
+      <TextField source="pr_name" />
       <DateField source="published_at" />
       <TextField source="category" />
       <BooleanField source="commentable" />

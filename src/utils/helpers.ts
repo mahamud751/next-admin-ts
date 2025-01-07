@@ -10,7 +10,7 @@ export const required =
     value ? undefined : message;
 
 export const logger = (message: string, isError: boolean = true): void => {
-  if (process.env.REACT_APP_NODE_ENV === "development") {
+  if (process.env.NEXT_PUBLIC_NODE_ENV === "development") {
     if (isError) {
       console.error(message);
     } else {
@@ -739,16 +739,16 @@ export const getAppResource = (resource) => {
 };
 
 export const getApiBaseUrl = () => {
-  if (process.env.REACT_APP_NODE_ENV === "development") {
+  if (process.env.NEXT_PUBLIC_NODE_ENV === "development") {
     return (
-      localStorage.getItem("api-base-url") || process.env.REACT_APP_API_URL
+      localStorage.getItem("api-base-url") || process.env.NEXT_PUBLIC_API_URL
     );
   }
-  return process.env.REACT_APP_API_URL;
+  return process.env.NEXT_PUBLIC_API_URL;
 };
 
 export const setBaseApiUrl = (url) => {
-  if (process.env.REACT_APP_NODE_ENV === "development") {
+  if (process.env.NEXT_PUBLIC_NODE_ENV === "development") {
     localStorage.setItem("api-base-url", url);
   }
 };
