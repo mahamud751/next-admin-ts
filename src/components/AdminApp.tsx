@@ -11,6 +11,7 @@ import { logger, isJSONParsable } from "@/utils/helpers";
 import { axiosInstance } from "@/utils/http";
 import { initiateSocket, socket } from "@/utils/socketio";
 import authProvider from "@/app/authProvider";
+import MyLayout from "@/layout";
 
 const AdminApp = () => {
   useClarity();
@@ -52,7 +53,19 @@ const AdminApp = () => {
       dataProvider={dataProvider}
       authProvider={authProvider}
       loginPage={LoginPage}
+      layout={MyLayout}
     >
+      {(permissions) => [
+        permissions?.includes("manageRequisitionMenu") ? (
+          <Resource
+            name="manageRequisition"
+            options={{
+              label: "Manage Requisition",
+              isMenuParent: true,
+            }}
+          />
+        ) : null,
+      ]}
       <Resource
         name="v1/purchaseRequisition"
         options={{ label: "Vendors" }}

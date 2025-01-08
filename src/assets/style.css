@@ -1,0 +1,12 @@
+ul.small__img > li > img {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+/* Making tooltip scrollable for recharts package */
+.recharts-default-tooltip {
+    overflow-y: auto;
+}
+.recharts-tooltip-item-list {
+    height: 280px;
+}
