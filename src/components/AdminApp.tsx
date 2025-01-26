@@ -12,6 +12,11 @@ import { axiosInstance } from "@/utils/http";
 import { initiateSocket, socket } from "@/utils/socketio";
 import authProvider from "@/app/authProvider";
 import MyLayout from "@/layout";
+import {
+  PurchaseRequisitionList,
+  PurchaseRequisitionCreate,
+} from "./purchaseRequisition";
+import { lightTheme } from "@/layout/themes";
 
 const AdminApp = () => {
   useClarity();
@@ -69,8 +74,9 @@ const AdminApp = () => {
       <Resource
         name="v1/purchaseRequisition"
         options={{ label: "Vendors" }}
-        list={<UserList />}
-        create={VendorCreate}
+        //@ts-ignore
+        list={<PurchaseRequisitionList />}
+        create={PurchaseRequisitionCreate}
       />
     </Admin>
   );

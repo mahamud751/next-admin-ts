@@ -9,7 +9,7 @@ export const required =
   (value: string): string | undefined =>
     value ? undefined : message;
 
-export const logger = (message: string, isError: boolean = true): void => {
+export const logger = (message, isError: boolean = true): void => {
   if (process.env.NEXT_PUBLIC_NODE_ENV === "development") {
     if (isError) {
       console.error(message);
@@ -19,12 +19,11 @@ export const logger = (message: string, isError: boolean = true): void => {
   }
 };
 
-export const isString = (value: any): value is string =>
-  typeof value === "string";
+export const isString = (value) => typeof value === "string";
 
-export const isInteger = (value: any): boolean => Number.isInteger(+value);
+export const isInteger = (value) => Number.isInteger(+value);
 
-export const isFloatingPoint = (value: any) =>
+export const isFloatingPoint = (value) =>
   Number.isFinite(+value) && !Number.isInteger(+value);
 
 export const isDecimal = (value) =>
@@ -463,7 +462,11 @@ export const getProductTextRenderer = (choice) => {
   return !!choice && !!choice?.id
     ? `${choice?.p_name} ${form ? `(${capitalizeFirstLetter(form)})` : ""} ${
         strength ? `(${strength})` : ""
-      } ${brand ? `(${brand})` : ""} (ID#${choice?.p_id})`
+      } ${brand ? `(${brand})` : ""} (${
+        choice?.isVariantData
+          ? getReadableSKU(choice?.pv?.[0]?.pv_attribute)
+          : ""
+      }${choice?.isVariantData ? ",VID" : "ID"}#${choice?.id})`
     : "";
 };
 

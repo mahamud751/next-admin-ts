@@ -89,7 +89,7 @@ const labTestDataProvider = {
       pagination: { page: number; perPage: number };
       sort: { field: string; order: string };
       filter: FilterPayload;
-      target: string;
+      target;
       id: number;
     }
   ) => {
@@ -122,7 +122,7 @@ const labTestDataProvider = {
       }
     );
   },
-  update: (resource: string, params: { id: number; data: any }) => {
+  update: (resource: string, params: { id: number; data }) => {
     let url = `/${resource}`;
 
     if (params.id) {

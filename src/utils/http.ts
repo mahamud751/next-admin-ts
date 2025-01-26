@@ -35,7 +35,7 @@ export const httpClient = (url: string, options: object = {}) => {
     return fetchUtils.fetchJson(endpoint, options);
   } else {
     inMemoryJWT.setRefreshTokenEndpoint(
-      `${URL?.split("/admin")[0]}/auth/v1/token/refresh?f=admin`
+      `${URL.split("/admin")[0]}/auth/v1/token/refresh?f=admin`
     );
     return inMemoryJWT
       .getRefreshedToken()
@@ -69,9 +69,10 @@ const getApiUrl = ({ isBaseUrl, resource }) => {
 };
 
 const baseApiUrl = {
-  "lab-order": process.env.REACT_APP_LT_API_URL,
-  "lab-loc": process.env.REACT_APP_LT_API_URL,
-  misc: process.env.REACT_APP_LT_API_URL,
-  patient: process.env.REACT_APP_LT_API_URL,
-  translator: process.env.REACT_APP_LT_API_URL,
+  "lab-order": process.env.NEXT_PUBLIC_LT_API_URL,
+  "lab-cart": process.env.NEXT_PUBLIC_LT_API_URL,
+  "lab-loc": process.env.NEXT_PUBLIC_LT_API_URL,
+  misc: process.env.NEXT_PUBLIC_LT_API_URL,
+  patient: process.env.NEXT_PUBLIC_LT_API_URL,
+  translator: process.env.NEXT_PUBLIC_LT_API_URL,
 };

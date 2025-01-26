@@ -3,10 +3,12 @@ import {
   Box,
   Button,
   CircularProgress,
+  createTheme,
   InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 import Fingerprint from "@mui/icons-material/Fingerprint";
 import HttpIcon from "@mui/icons-material/Http";
@@ -28,6 +30,7 @@ import {
 const LoginPage = () => {
   useDocumentTitle("Arogga ERP - Sign in");
 
+  const classes = useStyles();
   const notify = useNotify();
   const login = useLogin();
 
@@ -55,7 +58,7 @@ const LoginPage = () => {
         .finally(() => setIsLoading(false));
     } else {
       const url = `${
-        getApiBaseUrl()?.split("/admin")[0]
+        getApiBaseUrl().split("/admin")[0]
       }/auth/v1/sms/send?f=admin`;
 
       fetch(url, {
@@ -197,3 +200,15 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+const theme = createTheme({
+  spacing: 8,
+});
+
+const useStyles = makeStyles(() => ({
+  avatar: {
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+    backgroundColor: "#008069",
+  },
+}));

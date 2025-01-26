@@ -60,7 +60,8 @@ const dataProvider = {
       _orderBy: field,
       _order: order || "DESC",
       _page: page || 1,
-      _perPage: perPage || 25,
+      _perPage:
+        resource === "v1/employee" && perPage === 1000 ? 9000 : perPage || 25,
       ...fetchUtils.flattenObject({
         ...restFilter,
         ..._searchOr_Ids,
@@ -78,7 +79,13 @@ const dataProvider = {
       }
     ).then((res: any) => ({
       ...res?.json,
-      data: res?.json?.data || [],
+      data:
+        getAppResource(resource) === "general/v3/search"
+          ? res?.json?.data?.map((item) => ({
+              ...item,
+              id: item?.p_id,
+            }))
+          : res?.json?.data || [],
       total: res?.json?.total || 0,
     }));
   },
@@ -140,7 +147,7 @@ const dataProvider = {
       pagination: { page: number; perPage: number };
       sort: { field: string; order: string };
       filter: FilterPayload;
-      target: string;
+      target;
       id: number;
     }
   ) => {
@@ -183,7 +190,7 @@ const dataProvider = {
       total: res?.json?.total || 0,
     }));
   },
-  update: (resource: string, params: { id: number; data: any }) => {
+  update: (resource: string, params: { id: number; data }) => {
     return httpClient(`/${getAppResource(resource)}/${params.id}?f=admin`, {
       method: "POST",
       body: toQueryString(params?.data),

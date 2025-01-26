@@ -9,15 +9,17 @@ import {
   Autocomplete,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useTheme } from "@mui/material/styles";
+
+import { alpha, createTheme, useTheme } from "@mui/material/styles";
 import { useEffect, useRef, useState } from "react";
+import { makeStyles } from "@mui/styles";
 
 import { useGetCurrentUser } from "../hooks";
 import useKeyboardSearchShortcut from "../hooks/useKeyboardSearchShortcut";
 import { logger } from "../utils/helpers";
 
-// Replacing makeStyles with styled or sx prop for Material UI v6
 const SearchBar = () => {
+  const classes = useStyles();
   const theme = useTheme();
   const searchInputRef = useRef(null);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -65,24 +67,14 @@ const SearchBar = () => {
 
   return (
     <>
-      <div
-        style={{
-          width: 200,
-          marginLeft: 0,
-          marginRight: 5,
-          borderRadius: theme.shape.borderRadius,
-          backgroundColor: theme.palette.action.hover,
-        }}
-      >
+      <div className={classes.search}>
         <Button
-          sx={{
-            width: 200,
-            color: "inherit",
-            textTransform: "none",
+          classes={{
+            root: classes.inputRoot,
           }}
           onClick={handleClickOpen}
         >
-          <SearchIcon sx={{ marginRight: "10px" }} />
+          <SearchIcon className={classes.searchIcon} />
           Search menu...
         </Button>
       </div>
@@ -132,6 +124,30 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
+const theme = createTheme({
+  spacing: 8,
+});
+const useStyles = makeStyles(() => ({
+  root: {
+    flexGrow: 1,
+  },
+  search: {
+    width: 200,
+    marginLeft: 0,
+    marginRight: 5,
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+  },
+  searchIcon: {
+    margin: "0px 10px",
+    pointerEvents: "none",
+  },
+  inputRoot: {
+    width: 200,
+    color: "inherit",
+    textTransform: "none",
+  },
+}));
 
 const menus = [
   {

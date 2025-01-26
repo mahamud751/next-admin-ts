@@ -1,6 +1,7 @@
-import { styled } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 import LabelIcon from "@mui/icons-material/Label";
 import DefaultIcon from "@mui/icons-material/ViewList";
+import classnames from "classnames";
 import { useEffect, useState } from "react";
 import {
   DashboardMenuItem,
@@ -10,8 +11,10 @@ import {
   ResourceDefinition,
 } from "react-admin";
 import { shallowEqual, useSelector } from "react-redux";
-import CustomMenuItem from "./CustomMenuItem";
+
 import { isEmpty } from "../../utils/helpers";
+import CustomMenuItem from "./CustomMenuItem";
+import { createTheme } from "@mui/material";
 
 type MenuProps = {
   className: string;
@@ -19,31 +22,9 @@ type MenuProps = {
   dense: boolean;
   hasDashboard: boolean;
   logout: React.ElementType;
-  resources: ResourceDefinition<any>[];
+  resources: [];
   onMenuClick: () => void;
-  theme: any;
 };
-
-const Main = styled("div", {
-  shouldForwardProp: (prop) => prop !== "open",
-})<{ theme: any; open: boolean }>(({ theme, open }) => ({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
-  marginTop: "0.5em",
-  width: open ? 240 : 55, // Sidebar open and close width
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  [theme.breakpoints.only("xs")]: {
-    marginTop: 0,
-    marginBottom: "5em",
-  },
-  [theme.breakpoints.up("md")]: {
-    marginTop: "1.5em",
-  },
-}));
 
 const Menu = (props: MenuProps) => {
   const {
@@ -57,33 +38,51 @@ const Menu = (props: MenuProps) => {
     ...rest
   } = props;
 
+  const classes = useStyles(props);
   const translate = useTranslate();
   const open = useSelector((state: any) => state?.admin?.sidebarOpen);
   const pathname = useSelector(
     (state: any) => state?.router?.location.pathname
   );
-  console.log("pathname", pathname);
-
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const resources: ResourceDefinition<any>[] =
     Resources || Object.values(useResourceDefinitions());
   const hasList = (resource) => resource.hasList;
-  console.log("resources", resources);
 
   const handleToggle = (parent) => {
+    /**
+     * Handles toggling of parents dropdowns
+     * for resource visibility
+     */
     setState((prevState) => ({ [parent]: !prevState[parent] }));
   };
 
   const isParent = (resource) =>
+    /**
+     * Check if the given resource is a parent
+     * i.e. dummy resource for menu parenting
+     */
     resource.options &&
     resource.options.hasOwnProperty("isMenuParent") &&
     resource.options.isMenuParent;
 
   const isOrphan = (resource) =>
+    /**
+     * Check if the given resource is an orphan
+     * i.e. has no parents defined. Needed as
+     * these resources are supposed to be rendered
+     * as is
+     *
+     */
     resource.options &&
     !resource.options.hasOwnProperty("menuParent") &&
     !resource.options.hasOwnProperty("isMenuParent");
 
   const isChildOfParent = (resource, parentResource) =>
+    /**
+     * Returns true if the given resource is the
+     * mapped child of the parentResource
+     */
     resource.options &&
     resource.options.hasOwnProperty("menuParent") &&
     resource.options.menuParent === parentResource.name;
@@ -111,6 +110,10 @@ const Menu = (props: MenuProps) => {
   };
 
   const MenuItem = (resource) => (
+    /**
+     * Created and returns the MenuItemLink object component
+     * for a given resource.
+     */
     <MenuItemLink
       key={resource.name}
       to={`/${resource.name}`}
@@ -122,6 +125,9 @@ const Menu = (props: MenuProps) => {
     />
   );
 
+  /**
+   * Mapping a "parent" entry and then all its children to the "tree" layout
+   */
   const mapParentStack = (parentResource) => {
     return (
       <CustomMenuItem
@@ -143,17 +149,31 @@ const Menu = (props: MenuProps) => {
     );
   };
 
+  /**
+   * Mapping independent (without a parent) entries
+   */
   const mapIndependent = (independentResource) =>
     hasList(independentResource) && MenuItem(independentResource);
 
+  /**
+   * Initialising the initialExpansionState and
+   * active parent resource name at the time of
+   * initial menu rendering.
+   */
   const initialExpansionState = {};
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let parentActiveResName = null;
 
+  /**
+   * Initialise all parents to inactive first.
+   * Also find the active resource name.
+   */
   resources.forEach((resource) => {
     if (isParent(resource)) {
       initialExpansionState[resource.name] = false;
     } else if (
-      pathname?.startsWith(`/${resource.name}`) &&
+      pathname.startsWith(`/${resource.name}`) &&
       resource.options.hasOwnProperty("menuParent")
     ) {
       parentActiveResName = resource.options.menuParent;
@@ -189,19 +209,34 @@ const Menu = (props: MenuProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [globalThis.location.hash, resources]);
 
+  /**
+   * The final array which will hold the array
+   * of resources to be rendered
+   */
   const resRenderGroup = [];
 
+  /**
+   * Looping over all resources and pushing the menu tree
+   * for rendering in the order we find them declared in
+   */
   resources.forEach((r) => {
     if (isParent(r)) resRenderGroup.push(mapParentStack(r));
     if (isOrphan(r)) resRenderGroup.push(mapIndependent(r));
   });
 
   return (
-    <Main open={open} className={className} theme={props.theme} {...rest}>
+    <div
+      className={classnames(classes.main, className, {
+        [classes.open]: open,
+        [classes.closed]: !open,
+      })}
+      {...rest}
+    >
       {hasDashboard && (
         <DashboardMenuItem
           dense={dense}
           sidebarIsOpen={open}
+          // @ts-ignore
           primaryText={dashboardlabel}
           style={
             isEmpty(state) || state.hasOwnProperty(dashboardlabel)
@@ -215,8 +250,40 @@ const Menu = (props: MenuProps) => {
         />
       )}
       {resRenderGroup}
-    </Main>
+    </div>
   );
 };
+const theme = createTheme({
+  spacing: 8,
+});
+
+const useStyles = makeStyles(
+  () => ({
+    main: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      marginTop: "0.5em",
+      [theme.breakpoints.only("xs")]: {
+        marginTop: 0,
+        paddingBottom: "6em",
+      },
+      [theme.breakpoints.up("md")]: {
+        marginTop: "1.5em",
+      },
+      transition: theme.transitions.create("width", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    open: {
+      width: 240,
+    },
+    closed: {
+      width: 55,
+    },
+  }),
+  { name: "RaTreeMenu" }
+);
 
 export default Menu;

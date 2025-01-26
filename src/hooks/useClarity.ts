@@ -4,7 +4,7 @@ const useClarity = () => {
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_NODE_ENV !== "production") return;
 
-    const clarityKey = process.env.REACT_APP_MS_CLARITY_KEY;
+    const clarityKey = process.env.NEXT_PUBLIC_MS_CLARITY_KEY;
 
     if (!clarityKey)
       return console.warn("Microsoft Clarity Project ID is not set!");

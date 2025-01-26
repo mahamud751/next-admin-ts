@@ -1,10 +1,9 @@
-import { createTheme } from "@mui/material/styles";
-
-export const lightTheme = createTheme({
+import { defaultTheme } from "react-admin";
+export const lightTheme = {
+  ...defaultTheme,
   palette: {
     primary: {
       main: "#008069",
-      contrastText: "#ffffff", // optional, you can customize this if needed
     },
     secondary: {
       light: "#5f5fc4",
@@ -15,14 +14,28 @@ export const lightTheme = createTheme({
     background: {
       default: "#fcfcfe",
     },
-    mode: "light",
+    type: "light" as "light",
   },
   shape: {
     borderRadius: 5,
   },
-  spacing: 8, // define the spacing unit (default is 8px)
-  components: {
-    //@ts-ignore
+  sidebar: {
+    width: 250,
+  },
+  overrides: {
+    RaListToolbar: {
+      toolbar: {
+        marginTop: 25,
+      },
+    },
+    RaMenuItemLink: {
+      icon: {
+        color: "#969bad",
+      },
+      active: {
+        color: "#008069",
+      },
+    },
     RaSimpleFormIterator: {
       form: {
         flex: "none",
@@ -44,177 +57,152 @@ export const lightTheme = createTheme({
       },
     },
     MuiAppBar: {
-      styleOverrides: {
-        colorSecondary: {
-          backgroundColor:
-            process.env.REACT_APP_NODE_ENV === "production"
-              ? "#008069"
-              : "#6348c2",
-        },
+      colorSecondary: {
+        backgroundColor:
+          process.env.REACT_APP_NODE_ENV === "production"
+            ? "#008069"
+            : "#6348c2",
       },
     },
     MuiMenuItem: {
-      styleOverrides: {
-        root: {
-          "&:hover": {
-            backgroundColor: "rgb(211,211,211)",
-          },
+      root: {
+        "&:hover": {
+          backgroundColor: "rgb(211,211,211)",
         },
       },
     },
     MuiPaper: {
-      styleOverrides: {
-        elevation1: {
-          boxShadow: "none",
-        },
-        root: {
-          border: "1px solid #e0e0e3",
-          backgroundClip: "padding-box",
-        },
+      elevation1: {
+        boxShadow: "none",
+      },
+      root: {
+        border: "1px solid #e0e0e3",
+        backgroundClip: "padding-box",
       },
     },
     MuiTable: {
-      styleOverrides: {
-        root: {
-          border: "1px solid #EAEBEC",
-        },
+      root: {
+        border: "1px solid #EAEBEC",
       },
     },
     MuiTableRow: {
-      styleOverrides: {
-        root: {
-          "&:hover": {
-            backgroundColor: "#10837d50",
-          },
+      root: {
+        "&:hover": {
+          backgroundColor: "#10837d50",
         },
       },
     },
     MuiTableCell: {
-      styleOverrides: {
-        root: {
-          borderBottomColor: "#EAEBEC",
-        },
-        head: {
-          background: "#F8F9FD",
-          borderRadius: "6px 6px 0px 0px",
-          fontWeight: 600,
-        },
+      root: {
+        borderBottomColor: "#EAEBEC",
+      },
+      head: {
+        background: "#F8F9FD",
+        borderRadius: "6px 6px 0px 0px",
+        fontWeight: 600,
       },
     },
     MuiDialogTitle: {
-      styleOverrides: {
-        root: {
-          fontWeight: 600,
-          fontSize: 16,
-          color: "#112950",
-        },
+      root: {
+        fontWeight: 600,
+        fontSize: 16,
+        color: "#112950",
       },
     },
     MuiDialogContent: {
-      styleOverrides: {
-        root: {
-          borderTop: "1px solid #E0E4E8",
-          borderBottom: "1px solid #E0E4E8",
-        },
+      root: {
+        borderTop: "1px solid #E0E4E8",
+        borderBottom: "1px solid #E0E4E8",
       },
     },
     MuiButton: {
-      styleOverrides: {
-        contained: {
-          backgroundColor: "#008069",
-          color: "white",
-          boxShadow: "none",
-        },
+      contained: {
+        backgroundColor: "#008069",
+        color: "white",
+        boxShadow: "none",
       },
     },
     MuiButtonBase: {
-      styleOverrides: {
-        root: {
-          "&:hover:active::after": {
-            content: '""',
-            display: "block",
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            top: 0,
-            right: 0,
-            backgroundColor: "currentColor",
-            opacity: 0.3,
-            borderRadius: "inherit",
-          },
+      root: {
+        "&:hover:active::after": {
+          // recreate a static ripple color
+          // use the currentColor to make it work both for outlined and contained buttons
+          // but to dim the background without dimming the text,
+          // put another element on top with a limited opacity
+          content: '""',
+          display: "block",
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          right: 0,
+          backgroundColor: "currentColor",
+          opacity: 0.3,
+          borderRadius: "inherit",
         },
       },
     },
     MuiCheckbox: {
-      styleOverrides: {
-        colorSecondary: {
-          "&$checked": {
-            color: "#008069",
-          },
+      colorSecondary: {
+        "&$checked": {
+          color: "#008069",
         },
       },
     },
     MuiLinearProgress: {
-      styleOverrides: {
-        colorPrimary: {
-          backgroundColor: "#f5f5f5",
-        },
-        barColorPrimary: {
-          backgroundColor: "#d7d7d7",
-        },
+      colorPrimary: {
+        backgroundColor: "#f5f5f5",
+      },
+      barColorPrimary: {
+        backgroundColor: "#d7d7d7",
       },
     },
     MuiTextField: {
-      styleOverrides: {
-        root: {
-          "& .MuiFormLabel-root": {
-            "&.Mui-focused": {
-              color: " #3ECBA5",
-            },
+      root: {
+        "& .MuiFormLabel-root": {
+          "&.Mui-focused": {
+            color: " #3ECBA5",
           },
-          "& .MuiInputLabel-root": { color: "#7C8AA0" },
-          "& .MuiOutlinedInput-root": {
-            "& > fieldset": { borderColor: "#CED4DA" },
-            "&.Mui-disabled": {
-              backgroundColor: "#F4F4F4",
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "#008069",
-              borderWidth: 1,
-            },
-            "&:hover fieldset": {
-              borderColor: "#008069",
-              border: "1px solid #3ECBA5",
-            },
+        },
+        "& .MuiInputLabel-root": { color: "#7C8AA0" },
+        "& .MuiOutlinedInput-root": {
+          "& > fieldset": { borderColor: "#CED4DA" },
+          "&.Mui-disabled": {
+            backgroundColor: "#F4F4F4",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "#008069",
+            borderWidth: 1,
+          },
+          "&:hover fieldset": {
+            borderColor: "#008069",
+            border: "1px solid #3ECBA5",
           },
         },
       },
     },
     MuiFilledInput: {
-      styleOverrides: {
-        root: {
+      root: {
+        backgroundColor: "rgba(0, 0, 0, 0.04)",
+        "&$disabled": {
           backgroundColor: "rgba(0, 0, 0, 0.04)",
-          "&$disabled": {
-            backgroundColor: "rgba(0, 0, 0, 0.04)",
-          },
         },
       },
     },
     MuiSnackbarContent: {
-      styleOverrides: {
-        root: {
-          border: "none",
-        },
-        message: {
-          color: "#fff",
-          fontWeight: 500,
-        },
+      root: {
+        border: "none",
+      },
+      message: {
+        color: "#fff",
+        fontWeight: 500,
       },
     },
   },
   props: {
     MuiButtonBase: {
+      // disable ripple for perf reasons
       disableRipple: true,
     },
   },
-});
+};
