@@ -40,14 +40,15 @@ const Menu = (props: MenuProps) => {
 
   const classes = useStyles(props);
   const translate = useTranslate();
-  const open = useSelector((state: any) => state?.admin?.sidebarOpen);
+  const open = true;
+  console.log("open", open);
   const pathname = useSelector(
     (state: any) => state?.router?.location.pathname
   );
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const resources: ResourceDefinition<any>[] =
     Resources || Object.values(useResourceDefinitions());
-  const hasList = (resource) => resource?.hasList;
+  const hasList = (resource) => resource.hasList;
 
   const handleToggle = (parent) => {
     /**
