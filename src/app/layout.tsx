@@ -30,15 +30,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <InitColorSchemeScript attribute="class" />
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={lightTheme}>
-            <Provider store={store}>
-              {" "}
-              {/* Wrap the component tree with Provider */}
-              {children}
-            </Provider>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+
+        <Provider store={store}>
+          {" "}
+          {/* Wrap the component tree with Provider */}
+          {children}
+        </Provider>
       </body>
     </html>
   );

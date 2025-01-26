@@ -47,7 +47,7 @@ const Menu = (props: MenuProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const resources: ResourceDefinition<any>[] =
     Resources || Object.values(useResourceDefinitions());
-  const hasList = (resource) => resource.hasList;
+  const hasList = (resource) => resource?.hasList;
 
   const handleToggle = (parent) => {
     /**
@@ -103,7 +103,7 @@ const Menu = (props: MenuProps) => {
       resourcename = resource.options.label;
     else if (resource.name) {
       resourcename = translate(`resources.${resource.name}.name`);
-      if (resourcename.startsWith("resources."))
+      if (resourcename?.startsWith("resources."))
         resourcename = geResourceName(resource.name);
     }
     return resourcename;
@@ -173,7 +173,7 @@ const Menu = (props: MenuProps) => {
     if (isParent(resource)) {
       initialExpansionState[resource.name] = false;
     } else if (
-      pathname.startsWith(`/${resource.name}`) &&
+      pathname?.startsWith(`/${resource.name}`) &&
       resource.options.hasOwnProperty("menuParent")
     ) {
       parentActiveResName = resource.options.menuParent;

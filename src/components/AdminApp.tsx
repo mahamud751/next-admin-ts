@@ -59,6 +59,7 @@ const AdminApp = () => {
       authProvider={authProvider}
       loginPage={LoginPage}
       layout={MyLayout}
+      theme={lightTheme}
     >
       {(permissions) => [
         permissions?.includes("manageRequisitionMenu") ? (
@@ -73,7 +74,7 @@ const AdminApp = () => {
       ]}
       <Resource
         name="v1/purchaseRequisition"
-        options={{ label: "Vendors" }}
+        options={{ label: "Purchase Requisition" }}
         //@ts-ignore
         list={<PurchaseRequisitionList />}
         create={PurchaseRequisitionCreate}
