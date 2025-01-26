@@ -43,6 +43,7 @@ const CustomMenuItem = ({
       >
         {translate(name)}
       </Typography>
+
       {sidebarIsOpen && (
         <ListItemIcon
           className={classes.icon}
@@ -65,6 +66,8 @@ const CustomMenuItem = ({
       )}
     </MenuItem>
   );
+  console.log("isOpen", isOpen);
+  console.log("sidebarIsOpen", sidebarIsOpen);
 
   return (
     <>
@@ -95,9 +98,7 @@ const CustomMenuItem = ({
     </>
   );
 };
-const theme = createTheme({
-  spacing: 8,
-});
+const theme = createTheme({});
 const useStyles = makeStyles(
   () => ({
     icon: { minWidth: theme.spacing(5) },

@@ -1,7 +1,7 @@
 import { TOGGLE_SIDEBAR, OPEN_SIDEBAR, CLOSE_SIDEBAR } from "./sidebarActions";
 
 const initialState = {
-  sidebarOpen: false, // Default state of the sidebar
+  sidebarOpen: false,
 };
 
 const sidebarReducer = (state = initialState, action) => {

@@ -40,11 +40,13 @@ const Menu = (props: MenuProps) => {
 
   const classes = useStyles(props);
   const translate = useTranslate();
-  const open = true;
-  console.log("open", open);
+  const open = useSelector((state: any) => state?.admin?.sidebarOpen);
+
   const pathname = useSelector(
     (state: any) => state?.router?.location.pathname
   );
+  console.log("pathname", pathname);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const resources: ResourceDefinition<any>[] =
     Resources || Object.values(useResourceDefinitions());
@@ -278,10 +280,10 @@ const useStyles = makeStyles(
       }),
     },
     open: {
-      width: 240,
+      width: 640,
     },
     closed: {
-      width: 55,
+      width: 455,
     },
   }),
   { name: "RaTreeMenu" }

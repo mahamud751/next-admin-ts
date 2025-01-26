@@ -71,14 +71,17 @@ const AdminApp = () => {
             }}
           />
         ) : null,
+        <Resource
+          name="v1/purchaseRequisition"
+          options={{
+            label: "Purchase Requisition",
+            // menuParent: "manageRequisition",
+          }}
+          //@ts-ignore
+          list={<PurchaseRequisitionList />}
+          create={PurchaseRequisitionCreate}
+        />,
       ]}
-      <Resource
-        name="v1/purchaseRequisition"
-        options={{ label: "Purchase Requisition" }}
-        //@ts-ignore
-        list={<PurchaseRequisitionList />}
-        create={PurchaseRequisitionCreate}
-      />
     </Admin>
   );
 };
