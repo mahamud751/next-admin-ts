@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Admin, Resource } from "react-admin";
+import { Admin, localStorageStore, Resource } from "react-admin";
 import jsonServerProvider from "ra-data-json-server";
 import { UserList } from "./User/UserList";
 import dataProvider from "@/dataProvider";
@@ -15,8 +15,14 @@ import MyLayout from "@/layout";
 import {
   PurchaseRequisitionList,
   PurchaseRequisitionCreate,
-} from "./purchaseRequisition";
+} from "./manageRequisition/purchaseRequisition";
 import { lightTheme } from "@/layout/themes";
+import {
+  ApprovalCapCreate,
+  ApprovalCapEdit,
+  ApprovalCapList,
+  ApprovalCapShow,
+} from "./manageRequisition/purchaseRequisition/approvalCap";
 
 const AdminApp = () => {
   useClarity();
@@ -53,13 +59,17 @@ const AdminApp = () => {
 
   const userInfo = isJSONParsable(localUser) ? JSON.parse(localUser) : {};
   console.log(userInfo);
+  const store = localStorageStore();
+  store.setItem("sidebar.open", true);
   return (
     <Admin
       dataProvider={dataProvider}
       authProvider={authProvider}
       loginPage={LoginPage}
       layout={MyLayout}
+      dashboard={UserList}
       theme={lightTheme}
+      store={store}
     >
       {(permissions) => [
         permissions?.includes("manageRequisitionMenu") ? (
@@ -75,11 +85,23 @@ const AdminApp = () => {
           name="v1/purchaseRequisition"
           options={{
             label: "Purchase Requisition",
-            // menuParent: "manageRequisition",
+            menuParent: "manageRequisition",
           }}
           //@ts-ignore
           list={<PurchaseRequisitionList />}
           create={PurchaseRequisitionCreate}
+        />,
+        <Resource
+          name="v1/approvalCap"
+          options={{
+            label: "Cap Approvals",
+            menuParent: "manageRequisition",
+          }}
+          //@ts-ignore
+          list={<ApprovalCapList />}
+          create={ApprovalCapCreate}
+          edit={ApprovalCapEdit}
+          show={ApprovalCapShow}
         />,
       ]}
     </Admin>

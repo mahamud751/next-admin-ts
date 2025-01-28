@@ -12,6 +12,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import classnames from "classnames";
 import { useTranslate } from "react-admin";
 import { makeStyles } from "@mui/styles";
+import { Fragment } from "react";
 
 const CustomMenuItem = ({
   handleToggle,
@@ -26,51 +27,47 @@ const CustomMenuItem = ({
   const translate = useTranslate();
 
   const header = (
-    //@ts-ignore
     <MenuItem
       key={name}
       dense={dense}
-      button
       onClick={handleToggle}
       className={classnames(classes.menuItem, {
         [classes.openMenuItem]: isOpen,
       })}
     >
       <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
+      <ListItemIcon
+        className={classes.icon}
+        style={
+          isOpen
+            ? {
+                position: "absolute",
+                right: 0,
+                color: "#008069",
+              }
+            : {
+                position: "absolute",
+                right: 0,
+                color: "#969bad",
+              }
+        }
+      >
+        {isOpen ? <ExpandMore /> : <ChevronRightIcon />}
+      </ListItemIcon>
+
       <Typography
         variant="inherit"
         className={classnames(classes.menuItemName, "menuItemName")}
       >
         {translate(name)}
       </Typography>
-
-      {sidebarIsOpen && (
-        <ListItemIcon
-          className={classes.icon}
-          style={
-            isOpen
-              ? {
-                  position: "absolute",
-                  right: 0,
-                  color: "#008069",
-                }
-              : {
-                  position: "absolute",
-                  right: 0,
-                  color: "#969bad",
-                }
-          }
-        >
-          {isOpen ? <ExpandMore /> : <ChevronRightIcon />}
-        </ListItemIcon>
-      )}
     </MenuItem>
   );
   console.log("isOpen", isOpen);
   console.log("sidebarIsOpen", sidebarIsOpen);
 
   return (
-    <>
+    <Fragment>
       {sidebarIsOpen || isOpen ? (
         header
       ) : (
@@ -82,6 +79,7 @@ const CustomMenuItem = ({
         <List
           dense={dense}
           component="div"
+          disablePadding
           className={
             sidebarIsOpen ? classes.sidebarIsOpen : classes.sidebarIsClosed
           }
@@ -90,12 +88,11 @@ const CustomMenuItem = ({
             flexDirection: "column",
             alignItems: "left",
           }}
-          disablePadding
         >
           {children}
         </List>
       </Collapse>
-    </>
+    </Fragment>
   );
 };
 const theme = createTheme({});
@@ -116,9 +113,7 @@ const useStyles = makeStyles(
     },
     menuItem: { color: "rgba(0, 0, 0, 0.54)" },
     menuItemName: {},
-    openMenuItem: {
-      color: "#008069",
-    },
+    openMenuItem: {},
   }),
   { name: "RaTreeCustomMenuItem" }
 );
