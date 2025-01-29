@@ -168,7 +168,6 @@ const Menu = (props: TreeMenuProps) => {
 
   const [state, setState] = useState(initialExpansionState);
   const resRenderGroup = [];
-  console.log("resources", state);
 
   // useEffect(() => {
   //   const locationHashedArray = globalThis.location.hash.split("/");

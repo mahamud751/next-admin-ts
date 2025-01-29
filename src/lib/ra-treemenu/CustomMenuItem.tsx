@@ -63,8 +63,6 @@ const CustomMenuItem = ({
       </Typography>
     </MenuItem>
   );
-  console.log("isOpen", isOpen);
-  console.log("sidebarIsOpen", sidebarIsOpen);
 
   return (
     <Fragment>

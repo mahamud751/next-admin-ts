@@ -22,7 +22,12 @@ import {
   ApprovalCapEdit,
   ApprovalCapList,
   ApprovalCapShow,
-} from "./manageRequisition/purchaseRequisition/approvalCap";
+} from "./manageRequisition/approvalCap";
+import { DashIcon, ManageAccountingIcon, ManageRequisitionIcon } from "./icons";
+import {
+  BalanceMovementCreate,
+  BalanceMovementList,
+} from "./manageAccounting/balanceMovement";
 
 const AdminApp = () => {
   useClarity();
@@ -79,6 +84,7 @@ const AdminApp = () => {
               label: "Manage Requisition",
               isMenuParent: true,
             }}
+            icon={ManageRequisitionIcon}
           />
         ) : null,
         <Resource
@@ -90,6 +96,7 @@ const AdminApp = () => {
           //@ts-ignore
           list={<PurchaseRequisitionList />}
           create={PurchaseRequisitionCreate}
+          icon={DashIcon}
         />,
         <Resource
           name="v1/approvalCap"
@@ -102,6 +109,36 @@ const AdminApp = () => {
           create={ApprovalCapCreate}
           edit={ApprovalCapEdit}
           show={ApprovalCapShow}
+          icon={DashIcon}
+        />,
+        permissions?.includes("manageAccountingMenu") ? (
+          <Resource
+            name="manageAccounting"
+            options={{
+              label: "Manage Accounting",
+              isMenuParent: true,
+            }}
+            icon={ManageAccountingIcon}
+          />
+        ) : null,
+        <Resource
+          name="v1/accountingBalanceMovement"
+          options={{
+            label: "Balance Movement",
+            menuParent: "manageAccounting",
+          }}
+          list={
+            permissions?.includes("accountingBalanceMovementMenu") &&
+            permissions?.includes("accountingBalanceMovementView")
+              ? BalanceMovementList
+              : null
+          }
+          create={
+            permissions?.includes("accountingBalanceMovementCreate")
+              ? BalanceMovementCreate
+              : null
+          }
+          icon={DashIcon}
         />,
       ]}
     </Admin>

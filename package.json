@@ -24,6 +24,7 @@
     "env-cmd": "^10.1.0",
     "localforage": "^1.10.0",
     "luxon": "^3.5.0",
+    "mui-file-dropzone": "^4.0.2",
     "next": "15.1.6",
     "pluralize": "^8.0.0",
     "query-string": "^9.1.1",
