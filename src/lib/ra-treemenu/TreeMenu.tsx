@@ -2,17 +2,15 @@ import { makeStyles } from "@mui/styles";
 import LabelIcon from "@mui/icons-material/Label";
 import DefaultIcon from "@mui/icons-material/ViewList";
 import classnames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   DashboardMenuItem,
   MenuItemLink,
   useResourceDefinitions,
   useTranslate,
-  ResourceDefinition,
   useSidebarState,
 } from "react-admin";
 
-import { isEmpty } from "../../utils/helpers";
 import CustomMenuItem from "./CustomMenuItem";
 import { createTheme } from "@mui/material";
 

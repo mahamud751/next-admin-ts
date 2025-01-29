@@ -12,10 +12,8 @@ import {
   ReferenceField,
   TextField,
 } from "react-admin";
-
-// import AroggaDateField from "../../../components/AroggaDateField";
-
 import { Box, Button } from "@mui/material";
+
 import { CustomizableDatagrid } from "@/lib";
 import {
   useDocumentTitle,
@@ -28,6 +26,7 @@ import {
   capitalizeFirstLetterOfEachWord,
   getColorByStatus,
 } from "@/utils/helpers";
+import AroggaDateField from "@/components/common/AroggaDateField";
 
 const PurchaseRequisitionList: FC<ListProps> = ({ ...rest }) => {
   useDocumentTitle("Arogga | Purchase Requisition List");
@@ -170,7 +169,7 @@ const PurchaseRequisitionList: FC<ListProps> = ({ ...rest }) => {
           >
             <TextField source="u_name" />
           </ReferenceField>
-          {/* <AroggaDateField source="pr_created_at" label="Created At" /> */}
+          <AroggaDateField source="pr_created_at" label="Created At" />
           <FunctionField
             label="Action"
             onClick={(e) => e.stopPropagation()}

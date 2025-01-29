@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { useRecordContext } from "react-admin";
-const record = useRecordContext();
+import { RaRecord } from "react-admin";
+
 type UserEmployeeOptionTextRendererProps = {
-  record?: record;
+  record?: RaRecord;
   isEmployee?: boolean;
 };
 
@@ -19,7 +19,7 @@ const UserEmployeeOptionTextRenderer: FC<
     name = record?.u_name || "";
     mobileNo = record?.u_mobile || "";
   }
-  console.log("record", record);
+
   return (
     <>
       {!!record

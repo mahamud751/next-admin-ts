@@ -1,7 +1,7 @@
 import { Dialog } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { FC, useState } from "react";
-import { ImageField, useNotify } from "react-admin";
+import { Button, ImageField, useNotify } from "react-admin";
 import { useFormContext } from "react-hook-form";
 import { DropzoneArea } from "mui-file-dropzone";
 
@@ -12,6 +12,7 @@ type AroggaMovableImageInputProps = {
   source: string;
   minimumDimension?: number;
   dimentionValidation?: boolean;
+  existingFiles?: Array<{ src: string; title: string }>;
   [key: string]: any;
   label?: string;
 };
@@ -20,22 +21,27 @@ const AroggaMovableImageInput: FC<AroggaMovableImageInputProps> = ({
   source,
   minimumDimension = 700,
   dimentionValidation = false,
+  existingFiles = [],
   label,
   ...rest
 }) => {
-  const { setValue } = useFormContext();
+  const { setValue, getValues, trigger } = useFormContext();
   const classes = useStyles();
   const notify = useNotify();
-  console.log(rest);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
+
+  const currentAttachedFiles = getValues(source) || existingFiles;
 
   const onDropHandler = async (newFiles) => {
     const imageDetails = await getImageDetails(newFiles);
 
     let isWarningToasterShow = false;
-    const haveToRemoveImageNames = [];
+    const haveToRemoveImageNames: string[] = [];
 
     imageDetails?.forEach((image) => {
       if (
@@ -43,7 +49,7 @@ const AroggaMovableImageInput: FC<AroggaMovableImageInputProps> = ({
         image.height < minimumDimension ||
         image.width !== image.height
       ) {
-        haveToRemoveImageNames.push(image.title);
+        haveToRemoveImageNames.push(image?.title);
         if (!isWarningToasterShow) {
           isWarningToasterShow = true;
         }
@@ -52,20 +58,25 @@ const AroggaMovableImageInput: FC<AroggaMovableImageInputProps> = ({
 
     const attachedFiles = newFiles.map((file) => ({
       rawFile: file,
-
       src: URL.createObjectURL(file),
       title: file.name,
     }));
-    const updatedFiles = attachedFiles;
 
+    const updatedFiles = [...currentAttachedFiles, ...attachedFiles];
     setValue(source, updatedFiles);
 
     if (isWarningToasterShow) {
       notify(
-        `Please upload an image with a minimum dimensions of ${minimumDimension}x${minimumDimension} pixels! Only square-shaped images allowed such as an aspect ratio of 1:1`,
+        `Please upload an image with minimum dimensions of ${minimumDimension}x${minimumDimension} pixels! Only square-shaped images allowed such as an aspect ratio of 1:1`,
         { type: "warning" }
       );
     }
+  };
+
+  const handleRemoveImage = async (index: number) => {
+    const updatedFiles = currentAttachedFiles.filter((_, i) => i !== index);
+    setValue(source, updatedFiles);
+    await trigger(source);
   };
 
   return (
@@ -74,6 +85,7 @@ const AroggaMovableImageInput: FC<AroggaMovableImageInputProps> = ({
         {label
           ? label
           : `Attached Images (Minimum dimensions: ${minimumDimension}x${minimumDimension}px, Ratio: 1:1)`}
+
         <DropzoneArea
           acceptedFiles={[".jpeg", ".jpg", ".png", ".webp"]}
           maxFileSize={FILE_MAX_SIZE}
@@ -90,20 +102,33 @@ const AroggaMovableImageInput: FC<AroggaMovableImageInputProps> = ({
           }}
           {...rest}
         />
-        <ImageField
-          source="src"
-          title="title"
-          // @ts-ignore
-          style={{ cursor: "pointer" }}
-          onClick={(e) => {
-            e.stopPropagation();
-            setSelectedImage({
-              src: e.target?.currentSrc,
-              alt: e.target?.alt,
-            });
-            e.target?.currentSrc && setIsDialogOpen(true);
-          }}
-        />
+
+        <div className={classes.preview}>
+          {currentAttachedFiles.map((file, index) => (
+            <>
+              <div key={index} style={{ display: "inline-block", margin: 10 }}>
+                <ImageField
+                  source="src"
+                  title="title"
+                  record={file}
+                  //@ts-ignore
+                  style={{ cursor: "pointer" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage({
+                      src: file.src,
+                      alt: file.title,
+                    });
+                    setIsDialogOpen(true);
+                  }}
+                />
+                <Button onClick={() => handleRemoveImage(index)}>
+                  <span>Remove</span>
+                </Button>
+              </div>
+            </>
+          ))}
+        </div>
 
         <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
           <img src={selectedImage?.src} alt={selectedImage?.alt} />
@@ -130,7 +155,6 @@ const useStyles = makeStyles({
     borderRadius: 10,
     padding: 10,
     marginTop: 10,
-
     border: "2px dashed #008069",
   },
   preview: {
