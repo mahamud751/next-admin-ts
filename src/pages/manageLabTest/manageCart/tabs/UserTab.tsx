@@ -1,28 +1,22 @@
 import { Box, Grid } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { FC, useState } from "react";
 import { ReferenceInput, TextInput, useEditContext } from "react-admin";
-import { useFormState } from "react-final-form";
 
 import { useRequest } from "@/hooks";
-import { makeStyles } from "@mui/styles";
+
 import AroggaButton from "@/components/common/AroggaButton";
 import SendSmsDialog from "@/components/common/SendSmsDialog";
 import ProfilePhotoPlaceholderIcon from "@/components/icons/ProfilePhotoPlaceholder";
 import UserLocationAutocompleteInput from "@/components/manageLabTest/order/UserLocationAutocompleteInput";
 
-type UserTabProps = {
-  permissions?: string[];
-  setUserCash?: (userCash: any) => void;
-  [key: string]: any;
-};
-
-const UserTab: FC<UserTabProps> = ({ permissions, setUserCash, ...rest }) => {
+const UserTab = ({ setUserCash, ...rest }) => {
   const classes = useStyles();
-  const { values } = useFormState();
+  const { record } = useEditContext();
   const [isSmsDialogOpen, setIsSmsDialogOpen] = useState(false);
   const [isLocationEditBtnClick, setIsLocationEditBtnClick] = useState(false);
   const [isLocationAddBtnClick, setIsLocationAddBtnClick] = useState(false);
-  const { record } = useEditContext();
+
   const { data: userData } = useRequest(
     `/v1/users/${record.userId}`,
     {},
@@ -120,7 +114,7 @@ const UserTab: FC<UserTabProps> = ({ permissions, setUserCash, ...rest }) => {
                 minRows={2}
                 multiline
               />
-              {userData?.u_note !== values.userNote && (
+              {userData?.u_note !== record.userNote && (
                 <div
                   style={{
                     position: "absolute",
@@ -148,7 +142,7 @@ const UserTab: FC<UserTabProps> = ({ permissions, setUserCash, ...rest }) => {
                 reference="v1/userLocations"
                 filter={{
                   _orderBy: "ul_default",
-                  u_id: values.u_id,
+                  u_id: record.u_id,
                 }}
                 fullWidth
               >
@@ -160,7 +154,7 @@ const UserTab: FC<UserTabProps> = ({ permissions, setUserCash, ...rest }) => {
                 />
               </ReferenceInput>
               {rest.record?.address_checked &&
-                rest.record?.o_ul_id === values.o_ul_id && (
+                rest.record?.o_ul_id === record.o_ul_id && (
                   <AroggaButton
                     label="Edit"
                     type="success"

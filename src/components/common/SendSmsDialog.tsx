@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FC } from "react";
 import { SelectInput, TextInput } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 import { useRequest } from "@/hooks";
 import { HOTLINE_NUMBER } from "@/utils/constants";
@@ -19,7 +19,7 @@ const SendSmsDialog: FC<SendSmsDialogProps> = ({
   handleClose,
   ...rest
 }) => {
-  const { values } = useFormState();
+  const values = useWatch();
 
   const { smsMessage, to } = values;
 

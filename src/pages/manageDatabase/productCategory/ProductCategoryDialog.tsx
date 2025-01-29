@@ -2,8 +2,6 @@ import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import queryString from "query-string";
 import { FC, useState } from "react";
 import {
-  ImageField,
-  ImageInput,
   minLength,
   NumberInput,
   required,

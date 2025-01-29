@@ -6,7 +6,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { createTheme, styled } from "@mui/material/styles"; // For the styled API
+import { createTheme } from "@mui/material/styles"; // For the styled API
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import classnames from "classnames";

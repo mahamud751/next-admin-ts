@@ -12,15 +12,15 @@ import {
 import { Button, Grid } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
-import { labTestUploadDataProvider } from "../../../../dataProvider";
-import { useRequest } from "../../../../hooks";
+import { labTestUploadDataProvider } from "@/dataProvider";
+import { useRequest } from "@/hooks";
 
 const VendorUpdate = () => {
   const classes = useStyles();
   const refresh = useRefresh();
-  const { values } = useFormState();
+  const values = useWatch();
   const onSave = async (data) => {
     const payload = {
       name: {

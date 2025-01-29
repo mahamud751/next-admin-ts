@@ -23,20 +23,21 @@ import { styled } from "@mui/system";
 import { useState } from "react";
 import { useEditContext, useNotify, useRefresh } from "react-admin";
 
-import DiscountPrice from "../../../../components/icons/DiscountPrice";
-import { useDebounce, useRequest } from "../../../../hooks";
+import { useDebounce, useRequest } from "@/hooks";
 import {
   capitalizeFirstLetterOfEachWord,
   getFormattedDate,
-} from "../../../../utils/helpers";
-import { httpClient } from "../../../../utils/http";
-import { useAroggaStyles } from "../../../../utils/useAroggaStyles";
+} from "@/utils/helpers";
+import { httpClient } from "@/utils/http";
+
 import {
   AddressIcon,
   CalenderIcon,
   CartItemCountIcon,
+  DiscountPriceIcon,
   RegularPriceIcon,
-} from "../../../../components/icons";
+} from "@/components/icons";
+import { useAroggaStyles } from "@/utils/useAroggaStyles";
 
 const SearchTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -122,7 +123,7 @@ const LTCartDetails = () => {
             </Box>
           </Grid>
           <Grid alignItems="center" item md={4} container>
-            <DiscountPrice />
+            <DiscountPriceIcon />
             <Box marginLeft={2}>
               <Typography variant="body2" color="textSecondary">
                 Discount

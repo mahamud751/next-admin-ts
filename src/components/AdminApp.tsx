@@ -94,6 +94,9 @@ import {
   LabLocationList,
   LabLocationShow,
 } from "@/pages/manageLabTest/manageLocation";
+import { LabZoneList, LabZoneShow } from "@/pages/manageLabTest/manageZoneMain";
+import General from "@/pages/manageLabTest/manageGeneral";
+import LabReport from "@/pages/manageLabTest/manageLabReport/LabReport";
 
 const AdminApp = () => {
   useClarity();
@@ -302,6 +305,20 @@ const AdminApp = () => {
           icon={DashIcon}
         />,
         <Resource
+          name="lab-reports"
+          options={{
+            label: "Lab Reports",
+            menuParent: "manageLabTest",
+          }}
+          list={
+            permissions?.includes("labReportMenu") &&
+            permissions?.includes("labReportView")
+              ? LabReport
+              : undefined
+          }
+          icon={DashIcon}
+        />,
+        <Resource
           name="lab-order/api/v1/admin/order-shipments"
           options={{
             label: "Lab Report Shipments",
@@ -444,6 +461,21 @@ const AdminApp = () => {
           icon={DashIcon}
         />,
         <Resource
+          name="zone-main"
+          options={{
+            label: "Lab Zones",
+            menuParent: "manageLabTest",
+          }}
+          list={
+            permissions?.includes("labZoneMenu") &&
+            permissions?.includes("labZoneView")
+              ? LabZoneList
+              : undefined
+          }
+          show={permissions?.includes("labZoneView") ? LabZoneShow : undefined}
+          icon={DashIcon}
+        />,
+        <Resource
           name="v1/lab-location"
           options={{
             label: "Lab Locations",
@@ -505,6 +537,17 @@ const AdminApp = () => {
           show={LabGeneralIconShow}
           icon={DashIcon}
         />,
+        permissions?.includes("labGeneralMenu") && (
+          <Resource
+            name="misc/api/v1/admin/lab-setting"
+            options={{
+              label: "General Setting",
+              menuParent: "manageLabTest",
+            }}
+            list={General}
+            icon={DashIcon}
+          />
+        ),
       ]}
     </Admin>
   );

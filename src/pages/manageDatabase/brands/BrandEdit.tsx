@@ -11,8 +11,8 @@ import {
   required,
 } from "react-admin";
 
-import { useDocumentTitle } from "../../../hooks";
-import { groupBy, userEmployeeInputTextRenderer } from "../../../utils/helpers";
+import { useDocumentTitle } from "@/hooks";
+import { groupBy, userEmployeeInputTextRenderer } from "@/utils/helpers";
 import SaveDeleteToolbar from "@/components/common/SaveDeleteToolbar";
 import TaxonomiesByVocabularyInput from "@/components/common/TaxonomiesByVocabularyInput";
 import AroggaMovableImageInput from "@/components/common/AroggaMovableImageInput";

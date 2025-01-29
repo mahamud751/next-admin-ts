@@ -10,7 +10,7 @@ const LTCartEdit: FC<EditProps> = ({ permissions, ...rest }) => {
     <Edit {...rest} mutationMode="pessimistic">
       <TabbedForm toolbar={null}>
         <FormTab label="User">
-          <UserTab permissions={permissions} />
+          <UserTab />
         </FormTab>
         <FormTab label="Cart Details">
           <CartDetailsTab />

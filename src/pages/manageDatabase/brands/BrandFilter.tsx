@@ -7,7 +7,7 @@ import {
   TextInput,
 } from "react-admin";
 
-import { userEmployeeInputTextRenderer } from "../../../utils/helpers";
+import { userEmployeeInputTextRenderer } from "@/utils/helpers";
 import TaxonomiesByVocabularyInput from "@/components/common/TaxonomiesByVocabularyInput";
 import FormatedBooleanInput from "@/components/common/FormatedBooleanInput";
 import UserEmployeeOptionTextRenderer from "@/components/common/UserEmployeeOptionTextRenderer";

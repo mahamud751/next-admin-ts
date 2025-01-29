@@ -9,8 +9,8 @@ import {
   TextField,
 } from "react-admin";
 
-import { useNavigateFromList } from "../../../hooks";
-import { useAroggaStyles } from "../../../utils/useAroggaStyles";
+import { useNavigateFromList } from "@/hooks";
+import { useAroggaStyles } from "@/utils/useAroggaStyles";
 import ProductCategoryDialog from "./ProductCategoryDialog";
 
 const ProductCategoryDatagrid = () => {

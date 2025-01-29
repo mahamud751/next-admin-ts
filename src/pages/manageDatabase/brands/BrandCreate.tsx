@@ -11,8 +11,8 @@ import {
   required,
 } from "react-admin";
 
-import { useDocumentTitle } from "../../../hooks";
-import { userEmployeeInputTextRenderer } from "../../../utils/helpers";
+import { useDocumentTitle } from "@/hooks";
+import { userEmployeeInputTextRenderer } from "@/utils/helpers";
 import AroggaMovableImageInput from "@/components/common/AroggaMovableImageInput";
 import FormatedBooleanInput from "@/components/common/FormatedBooleanInput";
 
