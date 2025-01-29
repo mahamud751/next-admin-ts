@@ -25,6 +25,7 @@ import {
   ManageAccountingIcon,
   ManageDatabaseIcon,
   ManageLabTestIcon,
+  ManagePurchaseIcon,
   ManageRequisitionIcon,
 } from "./icons";
 
@@ -97,6 +98,11 @@ import {
 import { LabZoneList, LabZoneShow } from "@/pages/manageLabTest/manageZoneMain";
 import General from "@/pages/manageLabTest/manageGeneral";
 import LabReport from "@/pages/manageLabTest/manageLabReport/LabReport";
+import {
+  PurchaseCreate,
+  PurchaseEdit,
+  PurchaseList,
+} from "@/pages/managePurchase/purchases";
 
 const AdminApp = () => {
   useClarity();
@@ -155,7 +161,7 @@ const AdminApp = () => {
             }}
             icon={ManageDatabaseIcon}
           />
-        ) : null,
+        ) : undefined,
         <Resource
           name="productCategory"
           options={{
@@ -216,6 +222,40 @@ const AdminApp = () => {
           }
           icon={DashIcon}
         />,
+        permissions?.includes("managePurchaseMenu") ? (
+          <Resource
+            name="managePurchase"
+            options={{
+              label: "Manage Purchase",
+              isMenuParent: true,
+            }}
+            icon={ManagePurchaseIcon}
+          />
+        ) : undefined,
+        <Resource
+          name="v1/productPurchase"
+          options={{
+            label: "Purchases",
+            menuParent: "managePurchase",
+          }}
+          list={
+            permissions?.includes("productPurchaseMenu") &&
+            permissions?.includes("productPurchaseView")
+              ? PurchaseList
+              : undefined
+          }
+          create={
+            permissions?.includes("productPurchaseCreate")
+              ? PurchaseCreate
+              : undefined
+          }
+          edit={
+            permissions?.includes("productPurchaseEdit")
+              ? PurchaseEdit
+              : undefined
+          }
+          icon={DashIcon}
+        />,
         permissions?.includes("manageRequisitionMenu") ? (
           <Resource
             name="manageRequisition"
@@ -225,7 +265,7 @@ const AdminApp = () => {
             }}
             icon={ManageRequisitionIcon}
           />
-        ) : null,
+        ) : undefined,
         <Resource
           name="v1/purchaseRequisition"
           options={{
@@ -259,7 +299,7 @@ const AdminApp = () => {
             }}
             icon={ManageAccountingIcon}
           />
-        ) : null,
+        ) : undefined,
         <Resource
           name="v1/accountingBalanceMovement"
           options={{
