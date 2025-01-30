@@ -28,7 +28,7 @@ const BrandCreate: FC<CreateProps> = ({ ...rest }) => {
   });
 
   return (
-    <Create {...rest} transform={transform}>
+    <Create {...rest} transform={transform} redirect="list">
       <SimpleForm>
         <TextInput
           source="pb_name"

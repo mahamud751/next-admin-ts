@@ -51,11 +51,11 @@ const BalanceMovementList: FC<ListProps> = ({ ...rest }) => {
         perPage={25}
         sort={{ field: "id", order: "DESC" }}
         exporter={exporter}
-        // bulkActionButtons={false}
       >
         <CustomizableDatagrid
           hasBulkActions={false}
           hideableColumns={["abm_created_at"]}
+          bulkActionButtons={false}
         >
           <TextField source="id" label="BM ID" />
           <FunctionField

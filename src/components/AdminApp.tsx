@@ -103,6 +103,14 @@ import {
   PurchaseEdit,
   PurchaseList,
 } from "@/pages/managePurchase/purchases";
+import { ProductsUnitList } from "@/pages/manageDatabase/productUnit";
+import {
+  DiscountCreate,
+  DiscountEdit,
+  DiscountList,
+  DiscountShow,
+} from "@/pages/discounts";
+import { SuggestedProductList } from "@/pages/manageDatabase/suggestedProducts";
 
 const AdminApp = () => {
   useClarity();
@@ -161,7 +169,7 @@ const AdminApp = () => {
             }}
             icon={ManageDatabaseIcon}
           />
-        ) : undefined,
+        ) : null,
         <Resource
           name="productCategory"
           options={{
@@ -172,31 +180,66 @@ const AdminApp = () => {
             permissions?.includes("productCategoryMenu") &&
             permissions?.includes("taxonomyView")
               ? ProductCategoryList
-              : undefined
+              : null
           }
-          edit={
-            permissions?.includes("taxonomyEdit") ? TaxonomyEdit : undefined
-          }
-          show={
-            permissions?.includes("taxonomyView") ? TaxonomyShow : undefined
+          edit={permissions?.includes("taxonomyEdit") ? TaxonomyEdit : null}
+          show={permissions?.includes("taxonomyView") ? TaxonomyShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/suggestedProduct"
+          options={{
+            label: "Suggested Products",
+            menuParent: "manageDatabase",
+          }}
+          list={
+            permissions?.includes("suggestedProductMenu") &&
+            permissions?.includes("suggestedProductView")
+              ? SuggestedProductList
+              : null
           }
           icon={DashIcon}
         />,
         <Resource
-          name="productCategory"
+          name="v1/productUnit"
           options={{
-            label: "Product Categories",
+            label: "Product Units",
             menuParent: "manageDatabase",
           }}
-          list={ProductCategoryList}
-          edit={
-            permissions?.includes("taxonomyEdit") ? TaxonomyEdit : undefined
-          }
-          show={
-            permissions?.includes("taxonomyView") ? TaxonomyShow : undefined
+          list={
+            permissions?.includes("productUnitMenu") &&
+            permissions?.includes("productView")
+              ? ProductsUnitList
+              : null
           }
           icon={DashIcon}
         />,
+        <Resource
+          name="v1/productDiscount"
+          options={{
+            label: "Discounts",
+            menuParent: "manageDatabase",
+          }}
+          list={
+            permissions?.includes("productDiscountMenu") &&
+            permissions?.includes("productDiscountView")
+              ? DiscountList
+              : null
+          }
+          create={
+            permissions?.includes("productDiscountCreate")
+              ? DiscountCreate
+              : null
+          }
+          edit={
+            permissions?.includes("productDiscountEdit") ? DiscountEdit : null
+          }
+          show={
+            permissions?.includes("productDiscountView") ? DiscountShow : null
+          }
+          icon={DashIcon}
+        />,
+
         <Resource
           name="v1/productBrand"
           options={{
@@ -207,19 +250,13 @@ const AdminApp = () => {
             permissions?.includes("productBrandMenu") &&
             permissions?.includes("productBrandView")
               ? BrandList
-              : undefined
+              : null
           }
           create={
-            permissions?.includes("productBrandCreate")
-              ? BrandCreate
-              : undefined
+            permissions?.includes("productBrandCreate") ? BrandCreate : null
           }
-          edit={
-            permissions?.includes("productBrandEdit") ? BrandEdit : undefined
-          }
-          show={
-            permissions?.includes("productBrandView") ? BrandShow : undefined
-          }
+          edit={permissions?.includes("productBrandEdit") ? BrandEdit : null}
+          show={permissions?.includes("productBrandView") ? BrandShow : null}
           icon={DashIcon}
         />,
         permissions?.includes("managePurchaseMenu") ? (
@@ -231,7 +268,7 @@ const AdminApp = () => {
             }}
             icon={ManagePurchaseIcon}
           />
-        ) : undefined,
+        ) : null,
         <Resource
           name="v1/productPurchase"
           options={{
@@ -242,17 +279,15 @@ const AdminApp = () => {
             permissions?.includes("productPurchaseMenu") &&
             permissions?.includes("productPurchaseView")
               ? PurchaseList
-              : undefined
+              : null
           }
           create={
             permissions?.includes("productPurchaseCreate")
               ? PurchaseCreate
-              : undefined
+              : null
           }
           edit={
-            permissions?.includes("productPurchaseEdit")
-              ? PurchaseEdit
-              : undefined
+            permissions?.includes("productPurchaseEdit") ? PurchaseEdit : null
           }
           icon={DashIcon}
         />,
@@ -265,7 +300,7 @@ const AdminApp = () => {
             }}
             icon={ManageRequisitionIcon}
           />
-        ) : undefined,
+        ) : null,
         <Resource
           name="v1/purchaseRequisition"
           options={{
@@ -299,7 +334,7 @@ const AdminApp = () => {
             }}
             icon={ManageAccountingIcon}
           />
-        ) : undefined,
+        ) : null,
         <Resource
           name="v1/accountingBalanceMovement"
           options={{
@@ -310,12 +345,12 @@ const AdminApp = () => {
             permissions?.includes("accountingBalanceMovementMenu") &&
             permissions?.includes("accountingBalanceMovementView")
               ? BalanceMovementList
-              : undefined
+              : null
           }
           create={
             permissions?.includes("accountingBalanceMovementCreate")
               ? BalanceMovementCreate
-              : undefined
+              : null
           }
           icon={DashIcon}
         />,
@@ -339,9 +374,9 @@ const AdminApp = () => {
             permissions?.includes("labCartMenu") &&
             permissions?.includes("labCartView")
               ? LabCartList
-              : undefined
+              : null
           }
-          edit={permissions?.includes("labCartEdit") ? LabCartEdit : undefined}
+          edit={permissions?.includes("labCartEdit") ? LabCartEdit : null}
           icon={DashIcon}
         />,
         <Resource
@@ -354,7 +389,7 @@ const AdminApp = () => {
             permissions?.includes("labReportMenu") &&
             permissions?.includes("labReportView")
               ? LabReport
-              : undefined
+              : null
           }
           icon={DashIcon}
         />,
@@ -368,7 +403,7 @@ const AdminApp = () => {
             permissions?.includes("labReportMenuShipmentMenu") &&
             permissions?.includes("labReportMenuShipmentView")
               ? LabReportShipmentList
-              : undefined
+              : null
           }
           icon={DashIcon}
         />,
@@ -382,17 +417,15 @@ const AdminApp = () => {
             permissions?.includes("labSchedulesMenu") &&
             permissions?.includes("labSchedulesView")
               ? LabScheduleList
-              : undefined
+              : null
           }
           create={
             permissions?.includes("labSchedulesCreate")
               ? LabScheduleCreate
-              : undefined
+              : null
           }
           edit={
-            permissions?.includes("labSchedulesEdit")
-              ? LabScheduleEdit
-              : undefined
+            permissions?.includes("labSchedulesEdit") ? LabScheduleEdit : null
           }
           icon={DashIcon}
         />,
@@ -406,7 +439,7 @@ const AdminApp = () => {
             permissions?.includes("labReportMenuShipmentMenu") &&
             permissions?.includes("labReportMenuShipmentView")
               ? LabReportShipmentList
-              : undefined
+              : null
           }
           icon={DashIcon}
         />,
@@ -420,19 +453,13 @@ const AdminApp = () => {
             permissions?.includes("labVendorMenu") &&
             permissions?.includes("labVendorView")
               ? LabVendorList
-              : undefined
+              : null
           }
           create={
-            permissions?.includes("labVendorCreate")
-              ? LabVendorCreate
-              : undefined
+            permissions?.includes("labVendorCreate") ? LabVendorCreate : null
           }
-          edit={
-            permissions?.includes("labVendorEdit") ? LabVendorEdit : undefined
-          }
-          show={
-            permissions?.includes("labVendorView") ? LabVendorShow : undefined
-          }
+          edit={permissions?.includes("labVendorEdit") ? LabVendorEdit : null}
+          show={permissions?.includes("labVendorView") ? LabVendorShow : null}
           icon={DashIcon}
         />,
         <Resource
@@ -445,22 +472,18 @@ const AdminApp = () => {
             permissions?.includes("labCategoryMenu") &&
             permissions?.includes("labCategoryView")
               ? LabCategoryList
-              : undefined
+              : null
           }
           create={
             permissions?.includes("labCategoryCreate")
               ? LabCategoryCreate
-              : undefined
+              : null
           }
           edit={
-            permissions?.includes("labCategoryEdit")
-              ? LabCategoryEdit
-              : undefined
+            permissions?.includes("labCategoryEdit") ? LabCategoryEdit : null
           }
           show={
-            permissions?.includes("labCategoryView")
-              ? LabCategoryShow
-              : undefined
+            permissions?.includes("labCategoryView") ? LabCategoryShow : null
           }
           icon={DashIcon}
         />,
@@ -486,17 +509,15 @@ const AdminApp = () => {
             permissions?.includes("labCollectorMenu") &&
             permissions?.includes("labCollectorView")
               ? LabCollectorList
-              : undefined
+              : null
           }
           create={
             permissions?.includes("labCollectorCreate")
               ? LabCollectorCreate
-              : undefined
+              : null
           }
           edit={
-            permissions?.includes("labCollectorEdit")
-              ? LabCollectorsEdit
-              : undefined
+            permissions?.includes("labCollectorEdit") ? LabCollectorsEdit : null
           }
           icon={DashIcon}
         />,
@@ -510,9 +531,9 @@ const AdminApp = () => {
             permissions?.includes("labZoneMenu") &&
             permissions?.includes("labZoneView")
               ? LabZoneList
-              : undefined
+              : null
           }
-          show={permissions?.includes("labZoneView") ? LabZoneShow : undefined}
+          show={permissions?.includes("labZoneView") ? LabZoneShow : null}
           icon={DashIcon}
         />,
         <Resource
@@ -525,12 +546,10 @@ const AdminApp = () => {
             permissions?.includes("labLocationMenu") &&
             permissions?.includes("labLocationView")
               ? LabLocationList
-              : undefined
+              : null
           }
           show={
-            permissions?.includes("labLocationView")
-              ? LabLocationShow
-              : undefined
+            permissions?.includes("labLocationView") ? LabLocationShow : null
           }
           icon={DashIcon}
         />,
@@ -544,12 +563,10 @@ const AdminApp = () => {
             permissions?.includes("labPatientsMenu") &&
             permissions?.includes("labPatientsView")
               ? LabPatientList
-              : undefined
+              : null
           }
           show={
-            permissions?.includes("labPatientsView")
-              ? LabPatientShow
-              : undefined
+            permissions?.includes("labPatientsView") ? LabPatientShow : null
           }
           icon={DashIcon}
         />,

@@ -43,14 +43,13 @@ const BrandEdit: FC<EditProps> = ({ hasEdit, ...rest }) => {
       }
       {...rest}
       transform={transform}
+      redirect="list"
+      submitOnEnter={false}
+      initialValues={({ ptbm }) => ({
+        productType: ptbm?.map(({ ptbm_type }) => ptbm_type),
+      })}
     >
       <SimpleForm
-        //@ts-ignore
-        redirect="list"
-        submitOnEnter={false}
-        initialValues={({ ptbm }) => ({
-          productType: ptbm?.map(({ ptbm_type }) => ptbm_type),
-        })}
         toolbar={
           <SaveDeleteToolbar
             isSave

@@ -20,7 +20,7 @@ const BalanceMovementCreate: FC<CreateProps> = ({ ...rest }) => {
   const currentUser = useGetCurrentUser();
 
   return (
-    <Create {...rest}>
+    <Create {...rest} redirect="list">
       <SimpleForm>
         <TextInput
           source="abm_narration"

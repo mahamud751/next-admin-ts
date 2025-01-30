@@ -37,6 +37,7 @@
     "react-final-form": "^6.5.9",
     "react-redux": "^9.2.0",
     "react-webcam": "^7.2.0",
+    "rsuite": "^5.77.0",
     "socket.io-client": "^4.8.1",
     "xlsx": "^0.18.5"
   },

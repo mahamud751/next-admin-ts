@@ -26,13 +26,14 @@ const ProductCategoryDatagrid = () => {
       <Datagrid
         rowClick={navigateFromList}
         isRowExpandable={(row) => !!row?.t_has_child}
+        bulkActionButtons={false}
         expand={
           <ReferenceManyField
             reference="productCategory"
             target="_parent_id"
             pagination={<Pagination />}
             filter={{ _get_product_count: 1 }}
-            sort={{ field: "t_has_child", order: "asc" }}
+            sort={{ field: "t_has_child", order: "ASC" }}
           >
             <ProductCategoryDatagrid />
           </ReferenceManyField>

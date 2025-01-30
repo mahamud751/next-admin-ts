@@ -6,6 +6,7 @@ import {
   ListProps,
   ReferenceField,
   TextField,
+  usePermissions,
 } from "react-admin";
 
 import { useDocumentTitle, useExport, useNavigateFromList } from "@/hooks";
@@ -15,7 +16,7 @@ import AroggaDateField from "@/components/common/AroggaDateField";
 
 const BrandList: FC<ListProps> = ({ ...rest }) => {
   useDocumentTitle("Arogga | Brand List");
-
+  const { permissions } = usePermissions();
   const exporter = useExport(rest);
   const navigateFromList = useNavigateFromList(
     "productBrandView",
@@ -30,7 +31,6 @@ const BrandList: FC<ListProps> = ({ ...rest }) => {
       perPage={25}
       sort={{ field: "pb_id", order: "DESC" }}
       exporter={exporter}
-      // bulkActionButtons={permissions?.includes("productBrandDelete")}
       {...rest}
     >
       <CustomizableDatagrid
@@ -40,6 +40,7 @@ const BrandList: FC<ListProps> = ({ ...rest }) => {
           "pb_created_at",
           "pb_created_by",
         ]}
+        bulkActionButtons={permissions?.includes("productBrandDelete")}
       >
         <TextField source="pb_id" label="ID" />
         <TextField source="pb_name" label="Name" />

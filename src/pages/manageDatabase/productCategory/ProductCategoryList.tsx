@@ -25,7 +25,6 @@ const ProductCategoryList: FC<ListProps> = ({ ...rest }) => {
       actions={<ProductCategoryAction />}
       sort={{ field: "t_id", order: "DESC" }}
       exporter={exporter}
-      // bulkActionButtons={false}
     >
       <ProductCategoryDatagrid />
     </List>
