@@ -19,6 +19,7 @@ interface TreeMenuProps {
   className?: string;
   dense?: boolean;
   hasDashboard?: boolean;
+  resources: [];
   logout?: React.ReactNode;
   onMenuClick?: () => void;
   dashboardlabel?: string;
@@ -31,7 +32,7 @@ const Menu = (props: TreeMenuProps) => {
     dense,
     hasDashboard,
     logout,
-
+    resources: Resources,
     onMenuClick,
     ...rest
   } = props;
@@ -39,6 +40,7 @@ const Menu = (props: TreeMenuProps) => {
   const classes = useStyles(props);
   const translate = useTranslate();
   const [open] = useSidebarState();
+
   const pathname = window.location.hash;
   let allResources = useResourceDefinitions();
   const resources = Object.keys(allResources).map((name) => allResources[name]);
@@ -49,22 +51,20 @@ const Menu = (props: TreeMenuProps) => {
   };
 
   const isParent = (resource) =>
-    resource &&
     resource.options &&
     resource.options.hasOwnProperty("isMenuParent") &&
     resource.options.isMenuParent;
 
   const isOrphan = (resource) =>
-    resource &&
     resource.options &&
     !resource.options.hasOwnProperty("menuParent") &&
     !resource.options.hasOwnProperty("isMenuParent");
 
   const isChildOfParent = (resource, parentResource) =>
-    resource &&
     resource.options &&
     resource.options.hasOwnProperty("menuParent") &&
-    resource.options.menuParent == parentResource.name;
+    resource.options.menuParent === parentResource.name;
+
   const geResourceName = (slug) => {
     if (!slug) return;
     var words = slug.toString().split("_");
@@ -77,7 +77,7 @@ const Menu = (props: TreeMenuProps) => {
 
   const getPrimaryTextForResource = (resource) => {
     let resourcename = "";
-    if (resource && resource.options && resource.options.label)
+    if (resource.options && resource.options.label)
       resourcename = resource.options.label;
     else if (resource.name) {
       resourcename = translate(`resources.${resource.name}.name`);
@@ -112,26 +112,18 @@ const Menu = (props: TreeMenuProps) => {
       <CustomMenuItem
         key={parentResource.name}
         handleToggle={() => handleToggle(parentResource.name)}
-        isOpen={
-          state[parentResource.name] ||
-          parentActiveResName != parentResource.name
-        }
+        isOpen={state[parentResource.name]}
         sidebarIsOpen={open}
         name={getPrimaryTextForResource(parentResource)}
         icon={parentResource.icon ? <parentResource.icon /> : <LabelIcon />}
         dense={dense}
       >
-        {
-          // eslint-disable-next-line
-          resources
-            .filter(
-              (resource) =>
-                isChildOfParent(resource, parentResource) && hasList(resource)
-            )
-            .map((childResource) => {
-              return MenuItem(childResource);
-            })
-        }
+        {resources
+          .filter(
+            (resource) =>
+              isChildOfParent(resource, parentResource) && hasList(resource)
+          )
+          .map((childResource) => MenuItem(childResource))}
       </CustomMenuItem>
     );
   };

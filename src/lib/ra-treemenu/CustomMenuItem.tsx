@@ -36,31 +36,32 @@ const CustomMenuItem = ({
       })}
     >
       <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
-      <ListItemIcon
-        className={classes.icon}
-        style={
-          isOpen
-            ? {
-                position: "absolute",
-                right: 0,
-                color: "#008069",
-              }
-            : {
-                position: "absolute",
-                right: 0,
-                color: "#969bad",
-              }
-        }
-      >
-        {isOpen ? <ExpandMore /> : <ChevronRightIcon />}
-      </ListItemIcon>
-
       <Typography
         variant="inherit"
         className={classnames(classes.menuItemName, "menuItemName")}
       >
         {translate(name)}
       </Typography>
+      {sidebarIsOpen && (
+        <ListItemIcon
+          className={classes.icon}
+          style={
+            isOpen
+              ? {
+                  position: "absolute",
+                  right: 0,
+                  color: "#008069",
+                }
+              : {
+                  position: "absolute",
+                  right: 0,
+                  color: "#969bad",
+                }
+          }
+        >
+          {isOpen ? <ExpandMore /> : <ChevronRightIcon />}
+        </ListItemIcon>
+      )}
     </MenuItem>
   );
 

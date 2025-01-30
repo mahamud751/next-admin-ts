@@ -146,7 +146,8 @@ const AdminApp = () => {
   const localUser = localStorage.getItem("user-info");
 
   const userInfo = isJSONParsable(localUser) ? JSON.parse(localUser) : {};
-  console.log(userInfo);
+  // console.log("userInfo", userInfo);
+
   const store = localStorageStore();
   store.setItem("sidebar.open", true);
   return (
@@ -158,6 +159,7 @@ const AdminApp = () => {
       dashboard={UserList}
       theme={lightTheme}
       store={store}
+      disableTelemetry
     >
       {(permissions) => [
         permissions?.includes("manageDatabaseMenu") ? (
