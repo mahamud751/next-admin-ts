@@ -111,6 +111,12 @@ import {
   DiscountShow,
 } from "@/pages/discounts";
 import { SuggestedProductList } from "@/pages/manageDatabase/suggestedProducts";
+import {
+  LabTestPckgCreate,
+  LabTestPckgEdit,
+  LabTestPckgList,
+  LabTestPckgShow,
+} from "@/pages/manageLabTest/manageTestPackage";
 
 const AdminApp = () => {
   useClarity();
@@ -406,6 +412,31 @@ const AdminApp = () => {
             permissions?.includes("labReportMenuShipmentView")
               ? LabReportShipmentList
               : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="misc/api/v1/admin/lab-items"
+          options={{
+            label: "Lab Tests",
+            menuParent: "manageLabTest",
+          }}
+          list={
+            permissions?.includes("labLabItemsMenu") &&
+            permissions?.includes("labLabItemsView")
+              ? LabTestPckgList
+              : null
+          }
+          create={
+            permissions?.includes("labLabItemsCreate")
+              ? LabTestPckgCreate
+              : null
+          }
+          edit={
+            permissions?.includes("labLabItemsEdit") ? LabTestPckgEdit : null
+          }
+          show={
+            permissions?.includes("labLabItemsView") ? LabTestPckgShow : null
           }
           icon={DashIcon}
         />,
