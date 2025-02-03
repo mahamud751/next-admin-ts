@@ -9,7 +9,7 @@ import {
   required,
   usePermissions,
 } from "react-admin";
-import { FormSpy, useForm } from "react-final-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { Status } from "@/utils/enums";
 import { isEmpty, isJSONParsable, logger } from "@/utils/helpers";
@@ -33,8 +33,9 @@ const CheckOrder = ({
   setCurrentSubArea,
 }) => {
   const { permissions } = usePermissions();
-  const form = useForm();
-  const [formValues, setFormValues] = useState<any>([]);
+  const { setValue, control } = useFormContext();
+  const formValues = useWatch({ control });
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const toChoiceDivisions = (items: string[]) =>
     items.map((item) => ({
@@ -63,7 +64,7 @@ const CheckOrder = ({
   }, []);
   useEffect(() => {
     if (formValues?.userLocation) {
-      form.change("o_ul_id", undefined);
+      setValue("o_ul_id", undefined);
     }
   }, [formValues]);
 
@@ -133,14 +134,14 @@ const CheckOrder = ({
               </Grid>
             </>
           )}
-          <FormSpy
+          {/* <FormSpy
             subscription={{ values: true }}
             onChange={({ values }) =>
               setTimeout(() => {
                 setFormValues(values);
               }, 0)
             }
-          />
+          /> */}
         </Grid>
       </>
 
@@ -224,7 +225,7 @@ const CheckOrder = ({
           setIsDialogOpen(false);
         }}
         onClose={() => {
-          form.change("userLocation", undefined);
+          setValue("userLocation", undefined);
           setIsDialogOpen(false);
         }}
         confirmColor="primary"

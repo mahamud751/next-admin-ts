@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { ReferenceInput, SelectInput, TextInput, required } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useWatch, useFormContext } from "react-hook-form";
 
 import { useRequest } from "@/hooks";
 import AroggaDialogActions from "../common/AroggaDialogActions";
@@ -22,8 +22,8 @@ const AddnewSubArea: FC<AddnewSubAreaProps> = ({
   setIsSubAreaRefresh,
   handleClose,
 }) => {
-  const form = useForm();
-  const { values } = useFormState();
+  const { setValue } = useFormContext();
+  const values = useWatch();
   const [zone, setZone] = useState([]);
   const [expZone, setExpZone] = useState([]);
 
@@ -113,16 +113,16 @@ const AddnewSubArea: FC<AddnewSubAreaProps> = ({
     }
   );
   useEffect(() => {
-    form.change("sa_title", "");
+    setValue("sa_title", "");
     if (open) {
-      form.reset();
+      setValue.reset();
     }
-  }, [open, form]);
+  }, [open, setValue]);
 
   useEffect(() => {
     if (subAreaData && subAreaData.sa_id) {
       setIsSubAreaRefresh(true);
-      form.change("full_shipping_address.ul_sa_id", subAreaData.sa_id);
+      setValue("full_shipping_address.ul_sa_id", subAreaData.sa_id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subAreaData]);

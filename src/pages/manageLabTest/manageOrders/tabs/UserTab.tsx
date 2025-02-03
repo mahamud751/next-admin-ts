@@ -13,7 +13,7 @@ import {
   useNotify,
   useRefresh,
 } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import ProfilePhotoPlaceholderIcon from "@/components/icons/ProfilePhotoPlaceholder";
 
@@ -38,10 +38,10 @@ type UserTabProps = {
 const UserTab: FC<UserTabProps> = ({ permissions, ...rest }) => {
   const classes = useStyles();
   const notify = useNotify();
-  const form = useForm();
+  const { setValue } = useFormContext();
   const clipboard = useClipboard();
   const refresh = useRefresh();
-  const { values } = useFormState();
+  const values = useWatch();
   const [locations, setLocations] = useState(null);
   const [subAreaId, setSubAreaId] = useState(values?.userLocation?.subareaId);
   const [isSmsDialogOpen, setIsSmsDialogOpen] = useState(false);
@@ -116,7 +116,7 @@ const UserTab: FC<UserTabProps> = ({ permissions, ...rest }) => {
   }, []);
 
   useEffect(() => {
-    form.change("userNote", userData?.u_note);
+    setValue("userNote", userData?.u_note);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?.u_note]);
 

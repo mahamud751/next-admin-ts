@@ -2,7 +2,7 @@ import { Box, createTheme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { FC, useEffect } from "react";
 import { TextInput, required, useNotify } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { useRequest } from "@/hooks";
 import { isEmpty } from "@/utils/helpers";
@@ -23,8 +23,8 @@ const LabPopulateUserInfo: FC<PopulateUserInfoProps> = ({
 }) => {
   const classes = useStyles();
   const notify = useNotify();
-  const form = useForm();
-  const { values } = useFormState();
+  const { setValue } = useFormContext();
+  const values = useWatch();
   const { data, isLoading, refetch } = useRequest(
     `/v1/users?_mobile=${values.u_mobile?.split("+")[1]}`,
     {},
@@ -38,49 +38,49 @@ const LabPopulateUserInfo: FC<PopulateUserInfoProps> = ({
   }, [values]);
 
   useEffect(() => {
-    form.change("u_name", data?.[0]?.u_name || undefined);
-    form.change("u_id", data?.[0]?.u_id || undefined);
-    form.change("u_o_count", data?.[0]?.u_o_count || undefined);
-    form.change("u_d_count", data?.[0]?.u_d_count || undefined);
-    form.change("user", data?.[0] || undefined);
+    setValue("u_name", data?.[0]?.u_name || undefined);
+    setValue("u_id", data?.[0]?.u_id || undefined);
+    setValue("u_o_count", data?.[0]?.u_o_count || undefined);
+    setValue("u_d_count", data?.[0]?.u_d_count || undefined);
+    setValue("user", data?.[0] || undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
-    !isEmpty(values.user) && form.change("user", undefined);
-    form.change("o_ul_id", undefined);
-    values.u_name && form.change("u_name", undefined);
-    form.change("s_address.name", values.u_name);
-    form.change("s_address.mobile", values.u_mobile);
+    !isEmpty(values.user) && setValue("user", undefined);
+    setValue("o_ul_id", undefined);
+    values.u_name && setValue("u_name", undefined);
+    setValue("s_address.name", values.u_name);
+    setValue("s_address.mobile", values.u_mobile);
     setIsUserChecked(false);
     setHasLocationField(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.u_mobile]);
   useEffect(() => {
-    form.change("s_address.name", values.u_name);
+    setValue("s_address.name", values.u_name);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.u_name]);
   useEffect(() => {
     if (!values.o_ul_id) {
-      form.change("s_address.name", data?.[0]?.u_name);
-      form.change("s_address.mobile", data?.[0]?.u_mobile);
-      form.change("s_address.division", undefined);
-      form.change("s_address.district", undefined);
-      form.change("s_address.area", undefined);
-      form.change("s_address.homeAddress", undefined);
-      form.change("s_address.addressType", "Home");
+      setValue("s_address.name", data?.[0]?.u_name);
+      setValue("s_address.mobile", data?.[0]?.u_mobile);
+      setValue("s_address.division", undefined);
+      setValue("s_address.district", undefined);
+      setValue("s_address.area", undefined);
+      setValue("s_address.homeAddress", undefined);
+      setValue("s_address.addressType", "Home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.o_ul_id]);
   useEffect(() => {
     if (!isEmpty(values.user)) {
-      form.change("s_address.name", values.u_name);
-      form.change("s_address.mobile", values.u_mobile);
-      form.change("s_address.division", undefined);
-      form.change("s_address.district", undefined);
-      form.change("s_address.area", undefined);
-      form.change("s_address.homeAddress", undefined);
-      form.change("s_address.addressType", "Home");
+      setValue("s_address.name", values.u_name);
+      setValue("s_address.mobile", values.u_mobile);
+      setValue("s_address.division", undefined);
+      setValue("s_address.district", undefined);
+      setValue("s_address.area", undefined);
+      setValue("s_address.homeAddress", undefined);
+      setValue("s_address.addressType", "Home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.user]);

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { SelectInput, TextInput, usePermissions } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { useRequest } from "@/hooks";
 import { Status } from "@/utils/enums";
@@ -23,14 +23,14 @@ import LabUpdateAreaInput from "./LabUpdateAreaInput";
 import AddnewSubArea from "@/components/manageOrder/AddnewSubArea";
 
 const LabLocationCreateModal = ({ open, setOpenDialog }) => {
-  const { values } = useFormState();
+  const values = useWatch();
   const { permissions } = usePermissions();
   const [locations, setLocations] = useState(null);
   const [isAddNewSubAreaDialogOpen, setIsAddNewSubAreaDialogOpen] =
     useState(false);
   const [isSubAreaRefresh, setIsSubAreaRefresh] = useState(false);
   const [hasSubArea, setHasSubArea] = useState(false);
-  const form = useForm();
+  const { setValue } = useFormContext();
   const toChoices = (items: string[]) =>
     items.map((item: string) => ({ id: item, name: item }));
 
@@ -95,7 +95,7 @@ const LabLocationCreateModal = ({ open, setOpenDialog }) => {
       setHasSubArea(true);
     } else {
       setHasSubArea(false);
-      form.change("ul_sa_id", "");
+      setValue("ul_sa_id", "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values?.l_division, values?.l_district, values?.l_area, locations]);

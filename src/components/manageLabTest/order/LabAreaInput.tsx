@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { AutocompleteInput, useRecordContext } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 type AreaInputProps = {
   locations: any;
@@ -13,7 +13,7 @@ const LabAreaInput: FC<AreaInputProps> = ({
   setLocations,
   ...rest
 }) => {
-  const { values } = useFormState();
+  const values = useWatch();
   const record = useRecordContext();
 
   const toChoices = (items) => items?.map((item) => ({ id: item, name: item }));
@@ -40,7 +40,6 @@ const LabAreaInput: FC<AreaInputProps> = ({
             )
           : []
       }
-      resettable
       {...rest}
     />
   );

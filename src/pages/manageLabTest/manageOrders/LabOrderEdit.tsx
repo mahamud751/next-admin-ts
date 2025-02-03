@@ -16,11 +16,11 @@ const LabOrderEdit: FC<EditProps> = ({ permissions, ...rest }) => {
   useDocumentTitle("Arogga | Lab Order | Edit");
   return (
     <Edit {...rest} mutationMode="pessimistic">
-      <TabbedForm toolbar={null} initial={3}>
+      <TabbedForm toolbar={null} defaultValues={3}>
         <FormTab label="User">
           <UserTab permissions={permissions} />
         </FormTab>
-        <FormTab label="Order">
+        {/* <FormTab label="Order">
           <OrderDetailsTab />
         </FormTab>
         <FormTab label="Patients">
@@ -37,7 +37,7 @@ const LabOrderEdit: FC<EditProps> = ({ permissions, ...rest }) => {
         </FormTab>
         <FormTab label="Payment History">
           <RefundOrderTab />
-        </FormTab>
+        </FormTab> */}
       </TabbedForm>
     </Edit>
   );

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { AutocompleteInput } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { Status } from "@/utils/enums";
 import { logger } from "@/utils/helpers";
@@ -24,11 +24,11 @@ const LabSubAreaInput: FC<SubAreaInputProps> = ({
   setSubArea,
   ...rest
 }) => {
-  const form = useForm();
-  const { values } = useFormState();
+  const { setValue } = useFormContext();
+  const values = useWatch();
 
   useEffect(() => {
-    form.change("userLocation", {
+    setValue("userLocation", {
       ...values?.userLocation,
       subareaId: values?.userLocation?.subareaId,
     });

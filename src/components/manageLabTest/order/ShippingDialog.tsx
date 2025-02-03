@@ -10,9 +10,8 @@ import {
 import { makeStyles } from "@mui/styles";
 
 import { FC } from "react";
-import { useFormState } from "react-final-form";
-
-import { useRequest } from "../../../hooks";
+import { useWatch } from "react-hook-form";
+import { useRequest } from "@/hooks";
 import AroggaDialogActions from "@/components/common/AroggaDialogActions";
 
 type ShippingDialogProps = {
@@ -36,7 +35,7 @@ const ShippingDialog: FC<ShippingDialogProps> = ({
   ...rest
 }) => {
   const classes = useStyles();
-  const { values } = useFormState();
+  const values = useWatch();
   const { isLoading, refetch } = useRequest(
     `/lab-order/api/v1/admin/orders/${rest.record?.id}/location`,
 

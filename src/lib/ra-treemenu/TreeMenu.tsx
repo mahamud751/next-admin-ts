@@ -42,8 +42,10 @@ const Menu = (props: TreeMenuProps) => {
   const [open] = useSidebarState();
 
   const pathname = window.location.hash;
-  let allResources = useResourceDefinitions();
-  const resources = Object.keys(allResources).map((name) => allResources[name]);
+  const resourcesDefinitions = useResourceDefinitions();
+  const resources = Object.keys(resourcesDefinitions).map(
+    (name) => resourcesDefinitions[name]
+  );
   const hasList = (resource) => resource.hasList;
 
   const handleToggle = (parent) => {

@@ -1,7 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import { useState } from "react";
 import { ReferenceInput, useEditContext } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 import UserLocationAutocompleteInput from "@/components/manageLabTest/order/UserLocationAutocompleteInput";
 import AroggaButton from "@/components/common/AroggaButton";
@@ -11,7 +11,7 @@ import { makeStyles } from "@mui/styles";
 
 const UserTab = ({ ...rest }) => {
   const classes = useStyles();
-  const { values } = useFormState();
+  const values = useWatch();
   const [isLocationEditBtnClick, setIsLocationEditBtnClick] = useState(false);
   const [isLocationAddBtnClick, setIsLocationAddBtnClick] = useState(false);
   const { record } = useEditContext();

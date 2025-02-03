@@ -13,7 +13,7 @@ import {
   minLength,
   required,
 } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useWatch, useFormContext } from "react-hook-form";
 
 import { useDocumentTitle } from "@/hooks";
 import { FILE_MAX_SIZE } from "@/utils/constants";
@@ -33,7 +33,7 @@ const PharmacyCreate: FC<CreateProps> = (props) => {
 };
 
 const FormStateContent = () => {
-  const { values } = useFormState();
+  const values = useWatch();
   const form = useForm();
 
   useEffect(() => {

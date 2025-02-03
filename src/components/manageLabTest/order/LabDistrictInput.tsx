@@ -1,37 +1,35 @@
 import { FC } from "react";
 import { SelectInput } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 type DistrictInputProps = {
-    locations: any;
-    setLocations: (locations) => void;
-    [key: string]: any;
+  locations: any;
+  setLocations: (locations) => void;
+  [key: string]: any;
 };
 
 const LabDistrictInput: FC<DistrictInputProps> = ({
-    locations,
-    setLocations,
-    ...rest
+  locations,
+  setLocations,
+  ...rest
 }) => {
-    const { values } = useFormState();
+  const values = useWatch();
 
-    const toChoices = (items = []) =>
-        items?.map((item) => ({ id: item, name: item }));
+  const toChoices = (items = []) =>
+    items?.map((item) => ({ id: item, name: item }));
 
-    if (!locations) return null;
+  if (!locations) return null;
 
-    return (
-        <SelectInput
-            choices={
-                !!values.userLocation && !!values.userLocation.division
-                    ? toChoices(
-                          Object.keys(locations[values.userLocation.division])
-                      )
-                    : []
-            }
-            {...rest}
-        />
-    );
+  return (
+    <SelectInput
+      choices={
+        !!values.userLocation && !!values.userLocation.division
+          ? toChoices(Object.keys(locations[values.userLocation.division]))
+          : []
+      }
+      {...rest}
+    />
+  );
 };
 
 export default LabDistrictInput;

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { SimpleForm, TextInput, Title, useNotify } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { useDocumentTitle, useRequest } from "@/hooks";
 import { isValidMobileNo, required } from "@/utils/helpers";
@@ -107,9 +107,9 @@ const PromotionalMessagePage: FC = () => {
 };
 
 const PromotionalMessageForm = ({ isSuccess, isLoading, refetch }) => {
-  const form = useForm();
+  const { setValue } = useFormContext();
   const notify = useNotify();
-  const { values, errors, hasValidationErrors } = useFormState();
+  const { values, errors, hasValidationErrors } = useWatch();
 
   const handleSend = () => {
     if (hasValidationErrors) {
@@ -136,9 +136,9 @@ const PromotionalMessageForm = ({ isSuccess, isLoading, refetch }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      form.change("u_mobile", "+88");
-      form.change("amount", "50");
-      form.change(
+      setValue("u_mobile", "+88");
+      setValue("amount", "50");
+      setValue(
         "message",
         "আরোগ্য এপ ডাউনলোড করে উপভোগ করুন ৫০ টাকা ডিস্কাউন্ট সাথে ফ্রী ডেলিভারি এবং ১০০ টাকা পর্যন্ত ক্যাশব্যাক ডাউনলোড লিংকঃ www.arogga.com/share"
       );

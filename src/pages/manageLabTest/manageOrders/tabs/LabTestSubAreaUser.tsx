@@ -1,6 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { useForm, useFormState } from "react-final-form";
+import { useWatch, useFormContext } from "react-hook-form";
 
 import { Status } from "@/utils/enums";
 import { isJSONParsable, logger } from "@/utils/helpers";
@@ -23,8 +23,8 @@ const LabTestSubAreaUser: FC<UserTabProps> = ({
   page,
   ...rest
 }) => {
-  const form = useForm();
-  const { values } = useFormState();
+  const { setValue } = useFormContext();
+  const values = useWatch();
 
   const [locations, setLocations] = useState(null);
   const [subArea, setSubArea] = useState([]);
@@ -62,7 +62,7 @@ const LabTestSubAreaUser: FC<UserTabProps> = ({
     }
   }, []);
   useEffect(() => {
-    form.change("userLocation", {
+    setValue("userLocation", {
       ...values?.userLocation,
       district: values?.userLocation?.district,
       division: values?.userLocation?.division,
@@ -92,7 +92,7 @@ const LabTestSubAreaUser: FC<UserTabProps> = ({
     } else {
       setHasSubArea(false);
       // form.change("full_shipping_address.ul_sa_id", "");
-      form.change(
+      setValue(
         "userLocation.subareaId",
         Number(values?.userLocation?.subareaId) || undefined
       );

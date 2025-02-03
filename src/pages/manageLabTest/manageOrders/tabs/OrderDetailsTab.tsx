@@ -16,9 +16,9 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import { useEditContext } from "react-admin";
 
-import { useRequest } from "../../../../hooks";
-import { CheckIcon, DescriptionIcon } from "../../../../components/icons";
-import ClearBtn from "../../../../components/manageLabTest/Button/ClearBtn";
+import { useRequest } from "@/hooks";
+import { CheckIcon, DescriptionIcon } from "@/components/icons";
+import ClearBtn from "@/components/manageLabTest/Button/ClearBtn";
 import Details from "@/components/manageLabTest/order/Details";
 
 const OrderDetailsTab = () => {

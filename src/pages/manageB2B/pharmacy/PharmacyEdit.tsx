@@ -13,7 +13,7 @@ import {
   minLength,
   required,
 } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { useDocumentTitle } from "@/hooks";
 import { FILE_MAX_SIZE } from "@/utils/constants";
@@ -49,18 +49,18 @@ const PharmacyEdit: FC<EditProps> = ({ permissions, ...rest }) => {
 };
 
 const FormStateContent = () => {
-  const { values } = useFormState(); // Now safely inside form context
-  const form = useForm();
+  const values = useWatch(); // Now safely inside form context
+  const { setValue } = useFormContext();
 
   useEffect(() => {
     if (values.p_business_type === "pharmacy") {
-      form.change("p_trade_license_no", undefined);
-      form.change("attachedFiles_p_trade_license_file", undefined);
+      setValue("p_trade_license_no", undefined);
+      setValue("attachedFiles_p_trade_license_file", undefined);
     }
 
     if (values.p_business_type === "others") {
-      form.change("p_drug_license_no", undefined);
-      form.change("attachedFiles_p_drug_license_file", undefined);
+      setValue("p_drug_license_no", undefined);
+      setValue("attachedFiles_p_drug_license_file", undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.p_business_type]);

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { AutocompleteInput, useRecordContext } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 type AreaInputProps = {
   locations: any;
@@ -15,7 +15,7 @@ const LabUpdateAreaInput: FC<AreaInputProps> = ({
   setLocations,
   ...rest
 }) => {
-  const { values } = useFormState();
+  const values = useWatch();
   const record = useRecordContext();
 
   if (!locations) return null;

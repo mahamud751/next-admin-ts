@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { AutocompleteInput } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 import { Status } from "@/utils/enums";
 import { logger } from "@/utils/helpers";
@@ -21,7 +21,7 @@ const SubAreaInput: FC<SubAreaInputProps> = ({
   setLocations,
   ...rest
 }) => {
-  const { values } = useFormState();
+  const values = useWatch();
   const [subArea, setSubArea] = useState([]);
   const [locationId, setLocationId] = useState(0);
 

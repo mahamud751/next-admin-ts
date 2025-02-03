@@ -28,7 +28,7 @@ import {
   useNotify,
   useRefresh,
 } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 import LabAreaInput from "../../../../components/manageLabTest/Order/LabAreaInput";
 import LabDistrictInput from "../../../../components/manageLabTest/Order/LabDistrictInput";
@@ -61,7 +61,7 @@ const BranchDetails: FC<UserTabProps> = ({ ...rest }) => {
   const refresh = useRefresh();
   const notify = useNotify();
 
-  const { values } = useFormState();
+  const values = useWatch();
   const [locations, setLocations] = useState(null);
   const [isShippingDialogOpen, setIsShippingDialogOpen] = useState(false);
   const [isLocationEditBtnClick, setIsLocationEditBtnClick] = useState(false);
