@@ -1,7 +1,7 @@
 import { Toolbar, Typography } from "@mui/material";
 import CachedIcon from "@mui/icons-material/Cached";
 import { AppBar, Link, MenuItemLink, usePermissions } from "react-admin";
-import { styled } from "@mui/material/styles";
+
 import { makeStyles } from "@mui/styles";
 
 import aroggaWhiteLogo from "../assets/images/logo-white.png";

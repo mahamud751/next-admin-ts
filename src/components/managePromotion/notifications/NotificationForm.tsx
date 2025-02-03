@@ -8,7 +8,7 @@ import {
   minLength,
   required,
 } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 import { userEmployeeInputTextRenderer } from "@/utils/helpers";
 
@@ -17,18 +17,18 @@ import FormatedBooleanInput from "@/components/common/FormatedBooleanInput";
 import UserEmployeeOptionTextRenderer from "@/components/common/UserEmployeeOptionTextRenderer";
 
 const NotificationForm = () => {
-  const { values } = useFormState();
+  const { values } = useWatch();
 
   return (
     <Grid container spacing={1}>
-      {values.n_id && (
+      {values?.n_id && (
         <Grid item sm={6} md={3}>
           <TextInput
             source="n_id"
             label="ID"
             variant="outlined"
             helperText={false}
-            disabled
+            readOnly
             fullWidth
           />
         </Grid>
@@ -159,7 +159,7 @@ const NotificationForm = () => {
         <FormatedBooleanInput
           source="n_is_public"
           label="Public?"
-          style={{ marginTop: 8 }}
+          //   style={{ marginTop: 8 }}
           fullWidth
         />
       </Grid>
@@ -167,7 +167,7 @@ const NotificationForm = () => {
         <FormatedBooleanInput
           source="n_is_active"
           label="Active?"
-          style={{ marginTop: 8 }}
+          //   style={{ marginTop: 8 }}
           fullWidth
         />
       </Grid>

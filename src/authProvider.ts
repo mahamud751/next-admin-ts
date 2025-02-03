@@ -3,9 +3,9 @@ import { AuthProvider, UserIdentity } from "react-admin";
 import { toQueryString } from "@/dataProvider/toQueryString";
 import { inMemoryJWT } from "@/services";
 import { SocketServer, Status } from "@/utils/enums";
+import { getApiBaseUrl, isJSONParsable, logger } from "@/utils/helpers";
+import { axiosInstance, httpClient } from "@/utils/http";
 import { initiateSocket, socket } from "@/utils/socketio";
-import { getApiBaseUrl, logger, isJSONParsable } from "@/utils/helpers";
-import { httpClient, axiosInstance } from "@/utils/http";
 
 type LoginInput = {
   mobile: string;
@@ -35,7 +35,7 @@ const authProvider: AuthProvider = {
       localStorage.setItem("user", JSON.stringify(json.data.user));
       inMemoryJWT.setToken(json.data?.authToken, json.data?.tokenExpiry);
 
-      if (process.env.REACT_APP_SOCKET_SERVER === SocketServer.ON) {
+      if (process.env.NEXT_PUBLIC_SOCKET_SERVER === SocketServer.ON) {
         initiateSocket(
           {
             userId: json.data.user.u_id,
@@ -74,7 +74,7 @@ const authProvider: AuthProvider = {
       isBaseUrl: true,
     }).catch((err) => logger(err));
 
-    if (process.env.REACT_APP_SOCKET_SERVER === SocketServer.ON) {
+    if (process.env.NEXT_PUBLIC_SOCKET_SERVER === SocketServer.ON) {
       axiosInstance
         .get(`/users/logout?userName=${userInfo?.u_name}`, {
           headers: {

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Create, CreateProps, SimpleForm } from "react-admin";
 
-import NotificationForm from "../../../components/managePromotion/notifications/NotificationForm";
-import { useDocumentTitle } from "../../../hooks";
+import NotificationForm from "@/components/managePromotion/notifications/NotificationForm";
+import { useDocumentTitle } from "@/hooks";
 
 const NotificationCreate: FC<CreateProps> = ({ ...rest }) => {
   useDocumentTitle("Arogga | Notification Create");

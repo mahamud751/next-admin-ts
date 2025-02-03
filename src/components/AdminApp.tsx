@@ -10,7 +10,7 @@ import { SocketServer } from "@/utils/enums";
 import { logger, isJSONParsable } from "@/utils/helpers";
 import { axiosInstance } from "@/utils/http";
 import { initiateSocket, socket } from "@/utils/socketio";
-import authProvider from "@/app/authProvider";
+
 import MyLayout from "@/layout";
 
 import { lightTheme } from "@/layout/themes";
@@ -156,6 +156,8 @@ import {
 } from "@/pages/managePromotion/notificationsSchedules";
 import ShowMenu from "@/layout/ShowMenu";
 import Dashboard from "@/pages/dashboard";
+import authProvider from "@/authProvider";
+import SwitchToPage from "@/pages/switchTo";
 
 const AdminApp = () => {
   useClarity();
@@ -775,6 +777,15 @@ const AdminApp = () => {
               : null
           }
           show={permissions?.includes("labZoneView") ? LabZoneShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="switch-to"
+          options={{
+            label: "Lab Zones",
+            menuParent: "manageLabTest",
+          }}
+          list={SwitchToPage}
           icon={DashIcon}
         />,
         <Resource

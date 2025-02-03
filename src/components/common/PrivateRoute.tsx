@@ -33,7 +33,7 @@ const PrivateRoute = ({ path, component: Component, ...rest }) => {
     ((path === "/permissions" || path === "/permissions-list") &&
       !permissions?.includes("permissionMenu")) ||
     (path === "/switch-to" &&
-      process.env.REACT_APP_NODE_ENV === "production") ||
+      process.env.NEXT_PUBLIC_NODE_ENV === "development") ||
     (path === "/lab-reports" && !permissions?.includes("labReportMenu")) ||
     (path === "/daily-reports-2" &&
       (!permissions?.includes("dailyReportMenu") ||
