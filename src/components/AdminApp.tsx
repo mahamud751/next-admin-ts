@@ -23,10 +23,13 @@ import {
 import {
   DashIcon,
   ManageAccountingIcon,
+  ManageB2BIcon,
   ManageDatabaseIcon,
   ManageLabTestIcon,
+  ManagePromotionsIcon,
   ManagePurchaseIcon,
   ManageRequisitionIcon,
+  ManageTaxonomyIcon,
 } from "./icons";
 
 import {
@@ -38,7 +41,12 @@ import {
   PurchaseRequisitionList,
 } from "@/pages/manageRequisition/purchaseRequisition";
 import { ProductCategoryList } from "@/pages/manageDatabase/productCategory";
-import { TaxonomyEdit, TaxonomyShow } from "@/pages/manageTaxonomy/taxonomies";
+import {
+  TaxonomyCreate,
+  TaxonomyEdit,
+  TaxonomyList,
+  TaxonomyShow,
+} from "@/pages/manageTaxonomy/taxonomies";
 import {
   LabBannerCreate,
   LabBannerEdit,
@@ -117,6 +125,37 @@ import {
   LabTestPckgList,
   LabTestPckgShow,
 } from "@/pages/manageLabTest/manageTestPackage";
+import {
+  LabOrderCreate,
+  LabOrderEdit,
+  LabOrderList,
+  LabOrderListShow,
+} from "@/pages/manageLabTest/manageOrders";
+import {
+  PharmacyCreate,
+  PharmacyEdit,
+  PharmacyList,
+  PharmacyShow,
+} from "@/pages/manageB2B/pharmacy";
+import {
+  VocabularyCreate,
+  VocabularyEdit,
+  VocabularyList,
+  VocabularyShow,
+} from "@/pages/manageTaxonomy/vocabularies";
+import {
+  NotificationCreate,
+  NotificationEdit,
+  NotificationList,
+  NotificationShow,
+} from "@/pages/managePromotion/notifications";
+import {
+  NotificationScheduleCreate,
+  NotificationScheduleList,
+  NotificationScheduleShow,
+} from "@/pages/managePromotion/notificationsSchedules";
+import ShowMenu from "@/layout/ShowMenu";
+import Dashboard from "@/pages/dashboard";
 
 const AdminApp = () => {
   useClarity();
@@ -162,7 +201,7 @@ const AdminApp = () => {
       authProvider={authProvider}
       loginPage={LoginPage}
       layout={MyLayout}
-      dashboard={UserList}
+      dashboard={Dashboard}
       theme={lightTheme}
       store={store}
       disableTelemetry
@@ -299,6 +338,153 @@ const AdminApp = () => {
           }
           icon={DashIcon}
         />,
+        permissions?.includes("manageTaxonomyMenu") ? (
+          <Resource
+            name="manageTaxonomy"
+            options={{
+              label: "Manage Taxonomy",
+              isMenuParent: true,
+            }}
+            icon={ManageTaxonomyIcon}
+          />
+        ) : null,
+        <Resource
+          name="v1/vocabulary"
+          options={{
+            label: "Vocabularies",
+            menuParent: "manageTaxonomy",
+          }}
+          list={
+            permissions?.includes("vocabularyMenu") &&
+            permissions?.includes("vocabularyView")
+              ? VocabularyList
+              : null
+          }
+          create={
+            permissions?.includes("vocabularyCreate") ? VocabularyCreate : null
+          }
+          edit={permissions?.includes("vocabularyEdit") ? VocabularyEdit : null}
+          show={permissions?.includes("vocabularyView") ? VocabularyShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/taxonomy"
+          options={{
+            label: "Taxonomy Terms",
+            menuParent: "manageTaxonomy",
+          }}
+          list={
+            permissions?.includes("taxonomyMenu") &&
+            permissions?.includes("taxonomyView")
+              ? TaxonomyList
+              : null
+          }
+          create={
+            permissions?.includes("taxonomyCreate") ? TaxonomyCreate : null
+          }
+          edit={permissions?.includes("taxonomyEdit") ? TaxonomyEdit : null}
+          show={permissions?.includes("taxonomyView") ? TaxonomyShow : null}
+          icon={DashIcon}
+        />,
+        permissions?.includes("manageB2BMenu") ? (
+          <Resource
+            name="manageB2B"
+            options={{
+              label: "Manage B2B",
+              isMenuParent: true,
+            }}
+            icon={ManageB2BIcon}
+          />
+        ) : null,
+        <Resource
+          name="v1/pharmacy"
+          options={{
+            label: "B2B",
+            menuParent: "manageB2B",
+          }}
+          list={
+            permissions?.includes("pharmacyMenu") &&
+            permissions?.includes("pharmacyView")
+              ? PharmacyList
+              : null
+          }
+          create={
+            permissions?.includes("pharmacyCreate") ? PharmacyCreate : null
+          }
+          edit={permissions?.includes("pharmacyEdit") ? PharmacyEdit : null}
+          show={permissions?.includes("pharmacyView") ? PharmacyShow : null}
+          icon={DashIcon}
+        />,
+        permissions?.includes("managePromotionsMenu") && (
+          <Resource
+            name="promotions"
+            options={{
+              label: "Manage Promotion",
+              isMenuParent: true,
+            }}
+            icon={ManagePromotionsIcon}
+          />
+        ),
+        <Resource
+          name="v1/notification"
+          options={{
+            label: "Notifications",
+            menuParent: "promotions",
+          }}
+          list={
+            permissions?.includes("notificationMenu") &&
+            permissions?.includes("notificationView")
+              ? NotificationList
+              : null
+          }
+          create={
+            permissions?.includes("notificationCreate")
+              ? NotificationCreate
+              : null
+          }
+          edit={
+            permissions?.includes("notificationEdit") ? NotificationEdit : null
+          }
+          show={
+            permissions?.includes("notificationView") ? NotificationShow : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/NotificationSchedule"
+          options={{
+            label: "Notifications Schedules",
+            menuParent: "promotions",
+          }}
+          list={
+            permissions?.includes("notificationScheduleMenu") &&
+            permissions?.includes("notificationScheduleView")
+              ? NotificationScheduleList
+              : null
+          }
+          create={
+            permissions?.includes("notificationScheduleCreate")
+              ? NotificationScheduleCreate
+              : null
+          }
+          show={
+            permissions?.includes("notificationScheduleView")
+              ? NotificationScheduleShow
+              : null
+          }
+          icon={DashIcon}
+        />,
+        permissions?.includes("promotionalMessageMenu") && (
+          <Resource
+            name="promotional-messages"
+            options={{
+              label: "Promotional Messages",
+              menuParent: "promotions",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ),
         permissions?.includes("manageRequisitionMenu") ? (
           <Resource
             name="manageRequisition"
@@ -385,6 +571,28 @@ const AdminApp = () => {
               : null
           }
           edit={permissions?.includes("labCartEdit") ? LabCartEdit : null}
+          icon={DashIcon}
+        />,
+
+        <Resource
+          name="lab-order/api/v1/admin/orders"
+          options={{
+            label: "Orders",
+            menuParent: "manageLabTest",
+          }}
+          list={
+            permissions?.includes("labOrdersMenu") &&
+            permissions?.includes("labOrdersView")
+              ? LabOrderList
+              : null
+          }
+          create={
+            permissions?.includes("labOrdersCreate") ? LabOrderCreate : null
+          }
+          edit={permissions?.includes("labOrdersEdit") ? LabOrderEdit : null}
+          show={
+            permissions?.includes("labOrdersView") ? LabOrderListShow : null
+          }
           icon={DashIcon}
         />,
         <Resource

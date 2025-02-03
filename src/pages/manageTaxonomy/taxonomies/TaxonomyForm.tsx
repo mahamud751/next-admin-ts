@@ -43,7 +43,7 @@ const TaxonomyForm = () => {
           variant="outlined"
           helperText={false}
           reference="v1/vocabulary"
-          //   validate={[required()]}
+          isRequired
           fullWidth
         >
           <AutocompleteInput
@@ -54,7 +54,6 @@ const TaxonomyForm = () => {
             //     multiline: true,
             //   },
             // }}
-            // resettable
           />
         </ReferenceInput>
       </Grid>
@@ -96,7 +95,6 @@ const TaxonomyForm = () => {
                   //         multiline: true,
                   //     },
                   // }}
-                  //   resettable
                 />
               </ReferenceInput>
             </Grid>

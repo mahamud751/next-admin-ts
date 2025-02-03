@@ -161,6 +161,7 @@ const useStyles = makeStyles(() => ({
     borderRadius: 6,
     padding: 5,
     marginTop: 10,
+    width: "100%",
   },
   addTest_input: {
     gap: "2rem",

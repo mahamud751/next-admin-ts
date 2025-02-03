@@ -51,7 +51,6 @@ const TaxonomyList: FC<ListProps> = ({ ...rest }) => {
       sort={{ field: "t_id", order: "DESC" }}
       exporter={exporter}
       actions={<ListActions />}
-      // bulkActionButtons={false}
     >
       <CustomizableDatagrid
         rowClick={navigateFromList}
@@ -59,6 +58,7 @@ const TaxonomyList: FC<ListProps> = ({ ...rest }) => {
         expand={<TaxonomyExpand />}
         classes={{ expandedPanel: classes.expandedPanel }}
         hideableColumns={["t_created_at", "t_created_by"]}
+        bulkActionButtons={false}
       >
         <TextField source="t_id" label="ID" />
         <TextField source="t_title" label="Title" />

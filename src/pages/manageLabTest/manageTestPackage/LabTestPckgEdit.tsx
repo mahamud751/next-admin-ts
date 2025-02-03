@@ -36,7 +36,12 @@ const LabTestPckgEdit: FC<EditProps> = ({ permissions, ...rest }) => {
       }
       {...rest}
     >
-      <TabbedForm toolbar={null}>
+      <TabbedForm
+        toolbar={null}
+        style={{
+          width: "100%",
+        }}
+      >
         <FormTab label="Details">
           <LabTestDetails />
         </FormTab>

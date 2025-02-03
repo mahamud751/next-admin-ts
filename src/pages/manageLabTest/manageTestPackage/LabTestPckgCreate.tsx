@@ -14,7 +14,6 @@ import {
   ArrayInput,
   Create,
   CreateProps,
-  FormDataConsumer,
   ImageField,
   ImageInput,
   NumberInput,

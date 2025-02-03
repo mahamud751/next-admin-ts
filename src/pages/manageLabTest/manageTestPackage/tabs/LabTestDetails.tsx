@@ -245,7 +245,7 @@ const LabTestDetails = () => {
                       <SelectInput
                         variant="outlined"
                         label="sampleRequirements (EN)"
-                        // disabled={record?.itemType === "package"}
+                        readOnly={record?.itemType === "package"}
                         fullWidth
                         source={"en"}
                         choices={data?.map((requirement: { en: any }) => ({
@@ -257,7 +257,7 @@ const LabTestDetails = () => {
                         variant="outlined"
                         label="sampleRequirements (BN)"
                         fullWidth
-                        // disabled={record?.itemType === "package"}
+                        readOnly={record?.itemType === "package"}
                         source={"bn"}
                         choices={data?.map((requirement: { bn: any }) => ({
                           id: requirement.bn,
