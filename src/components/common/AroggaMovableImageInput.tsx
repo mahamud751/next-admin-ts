@@ -93,8 +93,8 @@ const AroggaMovableImageInput: FC<AroggaMovableImageInputProps> = ({
             root: classes.root,
           }}
           dropzoneText="Drag and drop an image here or click"
-          onDrop={dimentionValidation ? onDropHandler : undefined}
-          showPreviews={true}
+          onDrop={onDropHandler}
+          showPreviews={existingFiles.length > 0}
           showPreviewsInDropzone={false}
           previewGridProps={{
             container: { spacing: 2 },
