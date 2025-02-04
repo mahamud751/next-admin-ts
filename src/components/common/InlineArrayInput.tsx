@@ -90,18 +90,26 @@ const InlineArrayInput: FC<InlineArrayInputProps> = ({
         getItemLabel={(index) =>
           disableItemLabel ? "" : (index + 1).toString()
         }
-        // @ts-ignore
-        TransitionProps={{
-          classNames: "fade-exit",
-        }}
+        // addButton={
+        //   <Button
+        //     variant="outlined"
+        //     style={{
+        //       backgroundColor: "#027bff",
+        //       color: "white",
+        //       marginLeft: values?.[source]?.length ? 26 : 0,
+        //       ...addButtonStyle,
+        //     }}
+        //   >
+        //     {addButtonLabel}
+        //   </Button>
+        // }
         addButton={
           <Button
-            variant="outlined"
-            style={{
-              backgroundColor: "#027bff",
-              color: "white",
-              marginLeft: values?.[source]?.length ? 26 : 0,
-              ...addButtonStyle,
+            variant="contained"
+            color="primary"
+            style={addButtonStyle}
+            onClick={() => {
+              setValue(source, [...(values?.[source] || []), {}]);
             }}
           >
             {addButtonLabel}
@@ -122,11 +130,12 @@ const InlineArrayInput: FC<InlineArrayInputProps> = ({
         disableAdd={disableAdd}
         disableRemove={disableRemove}
         disableReordering={disableReordering || values?.[source]?.length === 1}
+        inline
       >
         <FormDataConsumer>
           {enableRenderProps
             ? (props) => children(props)
-            : ({ getSource, scopedFormData }) => (
+            : ({ scopedFormData }) => (
                 <Box
                   display="flex"
                   alignItems={disableRemove ? "flex-start" : "center"}
@@ -136,10 +145,7 @@ const InlineArrayInput: FC<InlineArrayInputProps> = ({
                     if (isValidElement(child)) {
                       return cloneElement(child, {
                         // @ts-ignore
-                        source: getSource(
-                          // @ts-ignore
-                          child.props.source
-                        ),
+                        source: `${child.props.source}`,
                         record: scopedFormData,
                         helperText: helperText,
                       });
