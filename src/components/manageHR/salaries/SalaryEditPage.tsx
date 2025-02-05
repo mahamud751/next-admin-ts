@@ -87,7 +87,7 @@ const SalaryEditPage = () => {
           values("s_eb_id", "");
         }}
       />
-      {values.s_payment_mode && values.s_payment_mode !== "cash" && (
+      {values?.s_payment_mode && values?.s_payment_mode !== "cash" && (
         <FunctionField
           label="Bank Name"
           source="s_eb_id"
@@ -101,7 +101,7 @@ const SalaryEditPage = () => {
                 filter={{
                   _emp_id: dd.s_employee_id,
                   _status: "active",
-                  _payment_type: values.s_payment_mode,
+                  _payment_type: values?.s_payment_mode,
                 }}
                 filterToQuery={(searchText) => ({
                   _search: searchText,
@@ -117,10 +117,10 @@ const SalaryEditPage = () => {
                     eb_card_no?: string;
                   }) =>
                     !!record
-                      ? `${record.eb_account_title} ( ${record.eb_account_no} ${record.eb_card_no} )`
+                      ? `${record?.eb_account_title} ( ${record?.eb_account_no} ${record?.eb_card_no} )`
                       : ""
                   }
-                  key={values.s_payment_mode}
+                  key={values?.s_payment_mode}
                 />
               </ReferenceInput>
             );

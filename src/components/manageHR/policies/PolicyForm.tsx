@@ -27,7 +27,7 @@ const PolicyForm = () => {
 
   return (
     <Grid container spacing={1}>
-      {values.p_id && (
+      {values?.p_id && (
         <Grid item sm={6} md={3}>
           <TextInput
             source="p_id"
@@ -35,7 +35,7 @@ const PolicyForm = () => {
             variant="outlined"
             helperText={false}
             fullWidth
-            disabled
+            readOnly
           />
         </Grid>
       )}

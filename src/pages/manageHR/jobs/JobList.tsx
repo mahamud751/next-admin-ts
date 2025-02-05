@@ -72,7 +72,7 @@ const JobList: FC<ListProps> = ({ ...rest }) => {
                 to={{
                   pathname: "/v1/jobApplications",
                   search: `filter=${JSON.stringify({
-                    _j_id: record.j_id,
+                    _j_id: record?.j_id,
                   })}`,
                 }}
               >
@@ -88,7 +88,7 @@ const JobList: FC<ListProps> = ({ ...rest }) => {
           render={({ j_id, j_title }: Record) => (
             <MuiLink
               href={`${
-                process.env.REACT_APP_WEBSITE_URL
+                process.env.NEXT_PUBLIC_WEBSITE_URL
               }/jobs/${j_id}/${convertToSlug(j_title)}`}
               target="_blank"
               rel="noopener"

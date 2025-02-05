@@ -73,9 +73,9 @@ const TreeDropdownInput: FC<TreeDropdownInputProps> = ({
 
   const OptionRenderer = ({ record }: any) => {
     return (
-      <span style={{ marginLeft: record.marginLeft }}>
-        {record.level !== 0 ? "-" : ""}{" "}
-        {capitalizeFirstLetterOfEachWord(record[optionTextValue])}
+      <span style={{ marginLeft: record?.marginLeft }}>
+        {record?.level !== 0 ? "-" : ""}{" "}
+        {capitalizeFirstLetterOfEachWord(record?.[optionTextValue])}
       </span>
     );
   };

@@ -62,14 +62,14 @@ const AttendanceFilter = ({ children, ...props }) => {
           inputText={userEmployeeInputTextRenderer}
         />
       </ReferenceInput>
-      {props.filterValues._shift_type && (
+      {props?.filterValues?._shift_type && (
         <ReferenceInput
           source="_s_id"
           label="Shift"
           variant="outlined"
           reference="v1/shift"
           sort={{ field: "s_id", order: "DESC" }}
-          filter={{ _shift_type: props.filterValues._shift_type }}
+          filter={{ _shift_type: props?.filterValues?._shift_type }}
           alwaysOn
         >
           <AutocompleteInput
@@ -90,7 +90,7 @@ const AttendanceFilter = ({ children, ...props }) => {
         optionTextValue="t_title"
         alwaysOn
       />
-      {props.filterValues._department && (
+      {props?.filterValues?._department && (
         <FormatedBooleanInput
           source="_include_child_department"
           label="Include Child Department"

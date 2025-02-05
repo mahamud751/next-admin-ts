@@ -49,7 +49,7 @@ const CreateBulkAdjustment: FC<CreateBulkAdjustmentProps> = ({
 
   useEffect(() => {
     setRowData([]);
-  }, [values["attachedFile"]]);
+  }, [values?.["attachedFile"]]);
 
   const csvToJsonConvert = (csvText) => {
     let lines = [];
@@ -85,7 +85,7 @@ const CreateBulkAdjustment: FC<CreateBulkAdjustmentProps> = ({
   const handleProcess = () => {
     setIsSubmitDialogOpen(false);
 
-    let file = values["attachedFile"];
+    let file = values?.["attachedFile"];
     if (file) {
       if (!(file.rawFile instanceof File) && !(file.rawFile instanceof Blob)) {
         setRowData([]);
@@ -145,7 +145,7 @@ const CreateBulkAdjustment: FC<CreateBulkAdjustmentProps> = ({
           color="primary"
           variant="contained"
           onClick={handleProcess}
-          disabled={!values["attachedFile"]}
+          disabled={!values?.["attachedFile"]}
         >
           Process
         </Button>

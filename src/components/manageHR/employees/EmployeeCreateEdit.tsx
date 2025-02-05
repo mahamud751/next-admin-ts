@@ -9,7 +9,7 @@ import {
   TextInput,
   required,
 } from "react-admin";
-import { useForm, useFormState } from "react-final-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { Button, Grid } from "@mui/material";
 import { useGetTaxonomiesByVocabulary, useRequest } from "@/hooks";
@@ -41,8 +41,8 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
   userRecord,
   ...rest
 }) => {
-  const form = useForm();
-  const { values } = useFormState();
+  const { setValue } = useFormContext();
+  const { values } = useWatch();
 
   const [isBankDialogOpen, setIsBankDialogOpen] = useState(false);
 
@@ -74,49 +74,49 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
       emp_residential_address,
     } = userRecord;
 
-    form.change("e_user_id", u_id);
-    u_name && form.change("e_name", u_name);
-    u_email && form.change("user.u_email", u_email);
-    form.change("e_mobile", u_mobile);
-    form.change("user.u_role", u_role);
-    emp_type && form.change("e_type", emp_type);
-    emp_salary && form.change("e_salary", emp_salary);
-    emp_date_joining && form.change("e_date_of_joining", emp_date_joining);
+    setValue("e_user_id", u_id);
+    u_name && setValue("e_name", u_name);
+    u_email && setValue("user.u_email", u_email);
+    setValue("e_mobile", u_mobile);
+    setValue("user.u_role", u_role);
+    emp_type && setValue("e_type", emp_type);
+    emp_salary && setValue("e_salary", emp_salary);
+    emp_date_joining && setValue("e_date_of_joining", emp_date_joining);
     emp_residential_address &&
-      form.change("e_residential_address", emp_residential_address);
+      setValue("e_residential_address", emp_residential_address);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (page !== "edit") return;
 
-    const ids = rest.record?.shifts
+    const ids = rest?.record?.shifts
       ?.filter(({ s_is_active }) => s_is_active === 1)
       ?.map((shift) => shift?.s_id);
 
-    const holidayTypes = rest.record?.holidays?.map(
+    const holidayTypes = rest?.record?.holidays?.map(
       (item) => item?.eh_holiday_type
     );
 
-    form.change("eShiftType", rest.record.shifts?.[0]?.s_shift_type);
-    form.change("shifts", ids);
-    form.change("holidaysSelect", holidayTypes);
+    setValue("eShiftType", rest?.record?.shifts?.[0]?.s_shift_type);
+    setValue("shifts", ids);
+    setValue("holidaysSelect", holidayTypes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rest.record]);
 
   useEffect(() => {
-    if (page === "create" && values.e_rank_id) {
+    if (page === "create" && values?.e_rank_id) {
       const singleRank = rankData?.find(
-        (option) => option.r_id === values.e_rank_id
+        (option) => option.r_id === values?.e_rank_id
       );
-      form.change("e_sick_leaves", singleRank.r_sick_leaves);
-      form.change("e_casual_leaves", singleRank.r_casual_leaves);
-      form.change("e_annual_leaves", singleRank.r_annual_leaves);
-      form.change("e_compensatory_leaves", singleRank.r_compensatory_leaves);
-      form.change("e_maternity_leaves", singleRank.r_maternity_leaves);
+      setValue("e_sick_leaves", singleRank.r_sick_leaves);
+      setValue("e_casual_leaves", singleRank.r_casual_leaves);
+      setValue("e_annual_leaves", singleRank.r_annual_leaves);
+      setValue("e_compensatory_leaves", singleRank.r_compensatory_leaves);
+      setValue("e_maternity_leaves", singleRank.r_maternity_leaves);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values.e_rank_id]);
+  }, [values?.e_rank_id]);
   const accountMode = useGetTaxonomiesByVocabulary({
     fetchKey: "payment_mode",
   });
@@ -128,12 +128,14 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
     : [];
 
   const shiftsChoices = shiftData?.filter(
-    ({ s_shift_type }) => values.eShiftType === s_shift_type
+    ({ s_shift_type }) => values?.eShiftType === s_shift_type
   );
 
-  values.holidays = values.e_dynamic_leave_mode
-    ? ["weekend_dynamic"]
-    : values.holidaysSelect || [];
+  if (values) {
+    values.holidays = values.e_dynamic_leave_mode
+      ? ["weekend_dynamic"]
+      : values.holidaysSelect || [];
+  }
 
   return (
     <>
@@ -282,7 +284,7 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
           source="eShiftType"
           label="Shift Type"
           helperText={false}
-          onChange={() => form.change("shifts", [])}
+          onChange={() => setValue("shifts", [])}
           validate={[required()]}
           fullWidth
         />
@@ -303,10 +305,10 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
           <FormatedBooleanInput
             source="e_dynamic_leave_mode"
             label="Dynamic Leave Mode"
-            onChange={() => form.change("holidaysSelect", [])}
+            onChange={() => setValue("holidaysSelect", [])}
           />
         </Tooltip>
-        {!values.e_dynamic_leave_mode && (
+        {!values?.e_dynamic_leave_mode && (
           <TaxonomiesByVocabularyInput
             fetchKey="holiday_type"
             inputType="selectArrayInput"
@@ -317,7 +319,7 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
             fullWidth
           />
         )}
-        {!!values.e_dynamic_leave_mode && (
+        {!!values?.e_dynamic_leave_mode && (
           <SelectInput
             source="e_weekend_leaves"
             label="Weekend Leaves"
@@ -334,7 +336,7 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
             fullWidth
           />
         )}
-        {!values.e_dynamic_leave_mode && (
+        {!values?.e_dynamic_leave_mode && (
           <NumberInput
             source="e_sick_leaves"
             label="Sick Leaves"
@@ -343,7 +345,7 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
             fullWidth
           />
         )}
-        {!values.e_dynamic_leave_mode && (
+        {!values?.e_dynamic_leave_mode && (
           <NumberInput
             source="e_casual_leaves"
             label="Casual Leaves"
@@ -352,7 +354,7 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
             fullWidth
           />
         )}
-        {!values.e_dynamic_leave_mode && (
+        {!values?.e_dynamic_leave_mode && (
           <NumberInput
             source="e_annual_leaves"
             label="Annual Leaves"
@@ -361,7 +363,7 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
             fullWidth
           />
         )}
-        {!values.e_dynamic_leave_mode && (
+        {!values?.e_dynamic_leave_mode && (
           <NumberInput
             source="e_compensatory_leaves"
             label="Compensatory Leaves"
@@ -370,7 +372,7 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
             fullWidth
           />
         )}
-        {!values.e_dynamic_leave_mode && (
+        {!values?.e_dynamic_leave_mode && (
           <NumberInput
             source="e_maternity_leaves"
             label="Maternity Leaves"
@@ -413,7 +415,7 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
               />
             </Grid>
           )}
-          {page === "edit" && values.e_payment_mode !== "cash" && (
+          {page === "edit" && values?.e_payment_mode !== "cash" && (
             <Grid item xs={12}>
               <>
                 <ReferenceInput
@@ -423,9 +425,9 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
                   helperText={false}
                   reference="v1/employeeBank"
                   filter={{
-                    _emp_id: values.e_id,
+                    _emp_id: values?.e_id,
                     _status: "active",
-                    _payment_type: values.e_payment_mode,
+                    _payment_type: values?.e_payment_mode,
                   }}
                   filterToQuery={(searchText) => ({
                     _account_title: searchText,
@@ -442,17 +444,17 @@ const EmployeeCreateEdit: FC<EmployeeCreateEditProps> = ({
                       eb_card_no?: string;
                     }) =>
                       !!record
-                        ? `${record.eb_account_title} ( ${record.eb_account_no} ${record.eb_card_no} )`
+                        ? `${record?.eb_account_title} ( ${record?.eb_account_no} ${record?.eb_card_no} )`
                         : ""
                     }
                     fullWidth
-                    key={values.e_payment_mode}
+                    key={values?.e_payment_mode}
                   />
                 </ReferenceInput>
               </>
             </Grid>
           )}
-          {page === "edit" && values.e_payment_mode !== "cash" && (
+          {page === "edit" && values?.e_payment_mode !== "cash" && (
             <Grid item xs={12}>
               <Button
                 variant="outlined"

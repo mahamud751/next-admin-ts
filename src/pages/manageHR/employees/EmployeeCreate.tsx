@@ -30,7 +30,7 @@ const EmployeeCreate: FC<CreateProps> = (props) => {
         <EmployeeCreateEdit
           page="create"
           // @ts-ignore
-          userRecord={props.history.location.state?.userRecord}
+          userRecord={props?.history?.location?.state?.userRecord}
         />
       </SimpleForm>
     </Create>

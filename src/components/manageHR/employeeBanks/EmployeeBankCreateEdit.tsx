@@ -25,7 +25,7 @@ const EmployeeBankCreateEdit: FC<EmployeeBankCreateEditProps> = ({ page }) => {
 
   const { data } = useRequest("/v1/bankNames", {}, { isPreFetching: true });
   const { data: bank } = useRequest(
-    `/v1/bank?ids=${values.eb_bank_id}`,
+    `/v1/bank?ids=${values?.eb_bank_id}`,
     {},
     { isPreFetching: page === "edit" }
   );
@@ -41,7 +41,7 @@ const EmployeeBankCreateEdit: FC<EmployeeBankCreateEditProps> = ({ page }) => {
         }))
     : [];
   const changeCardInfo = (e) => {
-    if (values.eb_payment_type === "card") {
+    if (values?.eb_payment_type === "card") {
       setValue("eb_account_no", "");
       setValue("eb_client_id", "");
     } else {
@@ -78,7 +78,7 @@ const EmployeeBankCreateEdit: FC<EmployeeBankCreateEditProps> = ({ page }) => {
             variant="outlined"
             helperText={false}
             choices={!!data?.length ? data : []}
-            defaultValue={bank?.[0].b_name}
+            defaultValue={bank?.[0]?.b_name}
             onChange={() => setValue("eb_bank_id", undefined)}
             optionValue="b_name"
             optionText="b_name"
@@ -86,7 +86,7 @@ const EmployeeBankCreateEdit: FC<EmployeeBankCreateEditProps> = ({ page }) => {
             fullWidth
           />
         </Grid>
-        {values.bankName && (
+        {values?.bankName && (
           <Grid item xs={12} sm={6} md={4}>
             <ReferenceInput
               source="eb_bank_id"
@@ -95,7 +95,7 @@ const EmployeeBankCreateEdit: FC<EmployeeBankCreateEditProps> = ({ page }) => {
               helperText={false}
               reference="v1/bank"
               sort={{ field: "b_id", order: "DESC" }}
-              filter={{ _name: values.bankName }}
+              filter={{ _name: values?.bankName }}
               filterToQuery={(searchText) => ({
                 _branch: searchText,
               })}
@@ -128,7 +128,7 @@ const EmployeeBankCreateEdit: FC<EmployeeBankCreateEditProps> = ({ page }) => {
             fullWidth
           />
         </Grid>
-        {values.eb_payment_type !== "card" && (
+        {values?.eb_payment_type !== "card" && (
           <Grid item xs={12} sm={6} md={4}>
             <TextInput
               source="eb_account_no"
@@ -140,7 +140,7 @@ const EmployeeBankCreateEdit: FC<EmployeeBankCreateEditProps> = ({ page }) => {
             />
           </Grid>
         )}
-        {values.eb_payment_type === "card" && (
+        {values?.eb_payment_type === "card" && (
           <>
             <Grid item xs={12} sm={6} md={4}>
               <NumberInput
@@ -158,7 +158,7 @@ const EmployeeBankCreateEdit: FC<EmployeeBankCreateEditProps> = ({ page }) => {
                 label="Client ID"
                 variant="outlined"
                 helperText={false}
-                validate={values.eb_card_no ? [required()] : null}
+                validate={values?.eb_card_no ? [required()] : null}
                 fullWidth
               />
             </Grid>

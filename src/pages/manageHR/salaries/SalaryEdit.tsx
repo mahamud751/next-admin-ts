@@ -22,12 +22,12 @@ const SalaryEdit: FC<EditProps> = ({ permissions, ...rest }) => {
   const dataProvider = useDataProvider();
 
   const onSave = async (values) => {
-    if (!values.s_payment_mode) {
+    if (!values?.s_payment_mode) {
       return notify("Payment method is required!", {
         type: "error",
       });
     }
-    if (values.s_payment_mode !== "cash" && !values.s_eb_id) {
+    if (values?.s_payment_mode !== "cash" && !values?.s_eb_id) {
       return notify("Select Bank!", {
         type: "error",
       });
@@ -36,10 +36,10 @@ const SalaryEdit: FC<EditProps> = ({ permissions, ...rest }) => {
     dataProvider
       // @ts-ignore
       .update("v1/salary", {
-        id: values.s_id,
+        id: values?.s_id,
         data: {
-          s_payment_mode: values.s_payment_mode,
-          s_eb_id: values.s_eb_id,
+          s_payment_mode: values?.s_payment_mode,
+          s_eb_id: values?.s_eb_id,
         },
       })
       .then(() => {
@@ -56,7 +56,7 @@ const SalaryEdit: FC<EditProps> = ({ permissions, ...rest }) => {
   return (
     <Edit
       mutationMode={
-        process.env.REACT_APP_NODE_ENV === "development"
+        process.env.NEXT_PUBLIC_NODE_ENV === "development"
           ? "pessimistic"
           : "optimistic"
       }

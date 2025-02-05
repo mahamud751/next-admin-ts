@@ -11,7 +11,7 @@ import {
   TextInput,
   Toolbar,
 } from "react-admin";
-import { useFormState } from "react-final-form";
+import { useWatch } from "react-hook-form";
 
 import TaxonomiesByVocabularyInput from "@/components/common/TaxonomiesByVocabularyInput";
 import TreeDropdownInput from "@/components/common/TreeDropdownInput";
@@ -24,11 +24,13 @@ const JobEdit: FC<EditProps> = ({ permissions, ...rest }) => {
   useDocumentTitle("Arogga | Job Edit");
 
   const Description = () => {
-    const { values } = useFormState();
+    const { values } = useWatch();
 
-    const [description, setDescription] = useState(values.j_description);
+    const [description, setDescription] = useState(values?.j_description);
 
-    values.j_description = description;
+    if (values) {
+      values.j_description = description;
+    }
 
     return (
       <Labeled label="Description" fullWidth>
@@ -49,7 +51,7 @@ const JobEdit: FC<EditProps> = ({ permissions, ...rest }) => {
   return (
     <Edit
       mutationMode={
-        process.env.REACT_APP_NODE_ENV === "development"
+        process.env.NEXT_PUBLIC_NODE_ENV === "development"
           ? "pessimistic"
           : "optimistic"
       }

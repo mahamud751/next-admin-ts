@@ -27,15 +27,15 @@ const EmployeeBankCreateDialog: FC<NewExpiredDialogProps> = ({
   const { setValue } = useFormContext();
 
   const body = {
-    eb_emp_id: values.e_id,
-    bankName: values.bankName,
-    eb_bank_id: values.eb_bank_id,
-    eb_account_title: values.eb_account_title,
-    eb_payment_type: values.eb_payment_type,
-    eb_account_no: values.eb_account_no,
-    eb_card_no: values.eb_card_no,
-    eb_client_id: values.eb_client_id,
-    eb_status: values.eb_status,
+    eb_emp_id: values?.e_id,
+    bankName: values?.bankName,
+    eb_bank_id: values?.eb_bank_id,
+    eb_account_title: values?.eb_account_title,
+    eb_payment_type: values?.eb_payment_type,
+    eb_account_no: values?.eb_account_no,
+    eb_card_no: values?.eb_card_no,
+    eb_client_id: values?.eb_client_id,
+    eb_status: values?.eb_status,
   };
 
   const { isLoading, refetch } = useRequest(
@@ -47,14 +47,14 @@ const EmployeeBankCreateDialog: FC<NewExpiredDialogProps> = ({
     {
       onSuccess: () => {
         handleDialogClose();
-        setValue("e_payment_mode", values.eb_payment_type);
+        setValue("e_payment_mode", values?.eb_payment_type);
         // refresh();
       },
     }
   );
 
   const { data } = useRequest("/v1/bankNames", {}, { isPreFetching: true });
-  const { data: bank } = useRequest(`/v1/bank?ids=${values.eb_bank_id}`, {});
+  const { data: bank } = useRequest(`/v1/bank?ids=${values?.eb_bank_id}`, {});
   const accountType = useGetTaxonomiesByVocabulary({
     fetchKey: "payment_mode",
   });
@@ -87,7 +87,7 @@ const EmployeeBankCreateDialog: FC<NewExpiredDialogProps> = ({
               fullWidth
             />
           </Grid>
-          {values.bankName && (
+          {values?.bankName && (
             <Grid item xs={6} sm={6} md={6}>
               <ReferenceInput
                 source="eb_bank_id"
@@ -96,7 +96,7 @@ const EmployeeBankCreateDialog: FC<NewExpiredDialogProps> = ({
                 helperText={false}
                 reference="v1/bank"
                 sort={{ field: "b_id", order: "DESC" }}
-                filter={{ _name: values.bankName }}
+                filter={{ _name: values?.bankName }}
                 filterToQuery={(searchText) => ({
                   _branch: searchText,
                 })}
@@ -128,7 +128,7 @@ const EmployeeBankCreateDialog: FC<NewExpiredDialogProps> = ({
               fullWidth
             />
           </Grid>
-          {values.eb_payment_type !== "card" && (
+          {values?.eb_payment_type !== "card" && (
             <Grid item xs={6} sm={6} md={6}>
               <TextInput
                 source="eb_account_no"
@@ -139,7 +139,7 @@ const EmployeeBankCreateDialog: FC<NewExpiredDialogProps> = ({
               />
             </Grid>
           )}
-          {values.eb_payment_type === "card" && (
+          {values?.eb_payment_type === "card" && (
             <>
               <Grid item xs={6} sm={6} md={6}>
                 <NumberInput
@@ -156,7 +156,7 @@ const EmployeeBankCreateDialog: FC<NewExpiredDialogProps> = ({
                   label="Client ID"
                   variant="outlined"
                   helperText={false}
-                  validate={values.eb_card_no ? [required()] : null}
+                  validate={values?.eb_card_no ? [required()] : null}
                   fullWidth
                 />
               </Grid>
@@ -178,11 +178,11 @@ const EmployeeBankCreateDialog: FC<NewExpiredDialogProps> = ({
         onDialogClose={handleDialogClose}
         onConfirm={refetch}
         disabled={
-          !values.bankName ||
-          !values.eb_bank_id ||
-          !values.eb_account_title ||
-          !values.eb_status ||
-          !values.eb_account_title.trim()
+          !values?.bankName ||
+          !values?.eb_bank_id ||
+          !values?.eb_account_title ||
+          !values?.eb_status ||
+          !values?.eb_account_title.trim()
         }
       />
     </Dialog>

@@ -6,7 +6,7 @@ import AroggaDateField from "@/components/common/AroggaDateField";
 
 const InfoTab = (props) => {
   const { data } = useRequest(
-    `/v1/employeeInfo?_e_id=${props.record.e_id}`,
+    `/v1/employeeInfo?_e_id=${props?.record?.e_id}`,
     {},
     { isPreFetching: true, isWarningNotify: false }
   );

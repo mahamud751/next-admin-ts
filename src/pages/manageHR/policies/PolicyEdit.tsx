@@ -15,7 +15,7 @@ const PolicyEdit: FC<EditProps> = ({ permissions, ...rest }) => {
   return (
     <Edit
       mutationMode={
-        process.env.REACT_APP_NODE_ENV === "development"
+        process.env.NEXT_PUBLIC_NODE_ENV === "development"
           ? "pessimistic"
           : "optimistic"
       }

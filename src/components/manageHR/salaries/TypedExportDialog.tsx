@@ -59,7 +59,7 @@ const TypedExportDialog: FC<TypedExportDialogProps> = ({
     s_month,
     s_year,
     s_payment_mode,
-  } = values;
+  } = values || {};
 
   const paymentModes = useGetTaxonomiesByVocabulary({
     fetchKey: "payment_mode",

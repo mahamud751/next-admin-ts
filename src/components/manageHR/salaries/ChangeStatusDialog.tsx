@@ -32,8 +32,8 @@ const ChangeStatusDialog: FC<ChangeStatusDialogProps> = ({
     {
       method: "POST",
       body: {
-        s_status: values.s_status,
-        payment_accounting_head: values.payment_accounting_head,
+        s_status: values?.s_status,
+        payment_accounting_head: values?.payment_accounting_head,
       },
     },
     {
@@ -43,7 +43,9 @@ const ChangeStatusDialog: FC<ChangeStatusDialogProps> = ({
   );
 
   const handleDialogClose = () => {
-    values.s_status = undefined;
+    if (values) {
+      values.s_status = undefined;
+    }
     setIsDialogOpen(false);
   };
 
@@ -59,7 +61,7 @@ const ChangeStatusDialog: FC<ChangeStatusDialogProps> = ({
           helperText={false}
           fullWidth
         />
-        {values.s_status === "paid" && (
+        {values?.s_status === "paid" && (
           <div>
             <Typography className={classes.textCenter}>
               Only Filled By Accounting Department
@@ -86,7 +88,7 @@ const ChangeStatusDialog: FC<ChangeStatusDialogProps> = ({
       </DialogContent>
       <AroggaDialogActions
         isLoading={isLoading}
-        disabled={!values.s_status}
+        disabled={!values?.s_status}
         onDialogClose={handleDialogClose}
         onConfirm={refetch}
       />

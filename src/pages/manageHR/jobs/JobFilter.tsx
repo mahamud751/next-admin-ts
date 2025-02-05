@@ -17,7 +17,7 @@ const JobFilter = (props) => (
       optionTextValue="t_title"
       alwaysOn
     />
-    {props.filterValues._department && (
+    {props?.filterValues?._department && (
       <FormatedBooleanInput
         source="_include_child_department"
         label="Include Child Department"
