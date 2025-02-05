@@ -34,17 +34,17 @@ const PharmacyCreate: FC<CreateProps> = (props) => {
 
 const FormStateContent = () => {
   const values = useWatch();
-  const form = useForm();
+  const { setValue } = useFormContext();
 
   useEffect(() => {
     if (values.p_business_type === "pharmacy") {
-      form.change("p_trade_license_no", undefined);
-      form.change("attachedFiles_p_trade_license_file", undefined);
+      setValue("p_trade_license_no", undefined);
+      setValue("attachedFiles_p_trade_license_file", undefined);
     }
 
     if (values.p_business_type === "others") {
-      form.change("p_drug_license_no", undefined);
-      form.change("attachedFiles_p_drug_license_file", undefined);
+      setValue("p_drug_license_no", undefined);
+      setValue("attachedFiles_p_drug_license_file", undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.p_business_type]);

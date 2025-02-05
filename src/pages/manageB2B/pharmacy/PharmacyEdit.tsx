@@ -49,7 +49,7 @@ const PharmacyEdit: FC<EditProps> = ({ permissions, ...rest }) => {
 };
 
 const FormStateContent = () => {
-  const values = useWatch(); // Now safely inside form context
+  const values = useWatch();
   const { setValue } = useFormContext();
 
   useEffect(() => {
@@ -93,7 +93,6 @@ const FormStateContent = () => {
               optionValue="u_id"
               optionText={<UserEmployeeOptionTextRenderer />}
               inputText={userEmployeeInputTextRenderer}
-              //   resettable
             />
           </ReferenceInput>
           <LocationInput
@@ -192,7 +191,10 @@ const FormStateContent = () => {
           <FileInput
             source="attachedFiles_p_trade_license_file"
             label="Trade License Files"
-            // accept="image/*, application/pdf"
+            accept={{
+              "application/pdf": [".pdf"],
+              "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+            }}
             maxSize={FILE_MAX_SIZE}
             options={{ maxSize: 5 }}
             helperText={false}

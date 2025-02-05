@@ -59,7 +59,7 @@ export const lightTheme = {
     MuiAppBar: {
       colorSecondary: {
         backgroundColor:
-          process.env.NEXT_PUBLIC_NODE_ENV === "production"
+          process.env.REACT_APP_NODE_ENV === "production"
             ? "#008069"
             : "#6348c2",
       },

@@ -25,11 +25,16 @@ import {
   ManageAccountingIcon,
   ManageB2BIcon,
   ManageDatabaseIcon,
+  ManageDeliveryIcon,
+  ManageFinanceIcon,
   ManageLabTestIcon,
   ManagePromotionsIcon,
   ManagePurchaseIcon,
   ManageRequisitionIcon,
+  ManageSiteIcon,
+  ManageStockIcon,
   ManageTaxonomyIcon,
+  ManageUserIcon,
 } from "./icons";
 
 import {
@@ -158,6 +163,80 @@ import ShowMenu from "@/layout/ShowMenu";
 import Dashboard from "@/pages/dashboard";
 import authProvider from "@/authProvider";
 import SwitchToPage from "@/pages/switchTo";
+import {
+  RegionCreate,
+  RegionEdit,
+  RegionList,
+  RegionShow,
+} from "@/pages/manageSite/regions";
+import {
+  PagesCreate,
+  PagesEdit,
+  PagesList,
+  PagesShow,
+} from "@/pages/manageSite/pages";
+import {
+  BlogCreate,
+  BlogEdit,
+  BlogList,
+  BlogShow,
+} from "@/pages/manageSite/blogs";
+import {
+  ShipmentEdit,
+  ShipmentList,
+  ShipmentShow,
+} from "@/pages/manageDelivery/shipments";
+import DeliveryTimeBenchmarkList from "@/pages/manageDelivery/deliveryTimeBenchmarkList/DeliveryTimeBenchmarkList";
+import {
+  LocationCreate,
+  LocationEdit,
+  LocationList,
+  LocationShow,
+} from "@/pages/manageUser/locations";
+import {
+  SubAreaCreate,
+  SubAreaEdit,
+  SubAreaList,
+  SubAreaShow,
+} from "@/pages/manageUser/subArea";
+import {
+  ThreePlList,
+  ThreePlListCreate,
+  ThreePlListEdit,
+  ThreePlListShow,
+} from "@/pages/manageDelivery/3plList";
+import {
+  BagCreate,
+  BagEdit,
+  BagList,
+  BagShow,
+} from "@/pages/manageDelivery/bags";
+import { UserCreate, UserEdit, UserShow } from "@/pages/manageUser/users";
+import {
+  BulkUserCreate,
+  BulkUserList,
+  BulkUserShow,
+} from "@/pages/manageUser/bulkUsers";
+import { CartList } from "@/pages/manageUser/carts";
+import {
+  AddressCreate,
+  AddressEdit,
+  AddressList,
+  AddressShow,
+} from "@/pages/manageUser/addresses";
+import { FlashSalesSettingList } from "@/pages/manageFlashSales/flashSalesSetting";
+import ManageReview from "./icons/ManageReview";
+import {
+  WarehouseCreate,
+  WarehouseEdit,
+  WarehouseList,
+  WarehouseShow,
+} from "@/pages/manageWarehouse/warehouses";
+import { StockList } from "@/pages/manageWarehouse/stocks";
+import { RequestStockList } from "@/pages/manageWarehouse/requestStocks";
+import AuditSystemList from "@/pages/manageWarehouse/auditSystem/AuditSystemList";
+import { QCDashboardList } from "@/pages/manageWarehouse/qcDashboard";
+import { QualityControlList } from "@/pages/manageWarehouse/qualityControl";
 
 const AdminApp = () => {
   useClarity();
@@ -308,6 +387,67 @@ const AdminApp = () => {
           show={permissions?.includes("productBrandView") ? BrandShow : null}
           icon={DashIcon}
         />,
+        permissions?.includes("manageSiteMenu") ? (
+          <Resource
+            name="manageSite"
+            options={{
+              label: "Manage Site",
+              isMenuParent: true,
+            }}
+            icon={ManageSiteIcon}
+          />
+        ) : null,
+        <Resource
+          name="v1/region"
+          options={{
+            label: "Regions",
+            menuParent: "manageSite",
+          }}
+          list={
+            permissions?.includes("regionMenu") &&
+            permissions?.includes("regionView")
+              ? RegionList
+              : null
+          }
+          create={permissions?.includes("regionCreate") ? RegionCreate : null}
+          edit={permissions?.includes("regionEdit") ? RegionEdit : null}
+          show={permissions?.includes("regionView") ? RegionShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/adminPages"
+          options={{
+            label: "Pages",
+            menuParent: "manageSite",
+          }}
+          list={
+            permissions?.includes("pageMenu") &&
+            permissions?.includes("pageView")
+              ? PagesList
+              : null
+          }
+          create={permissions?.includes("pageCreate") ? PagesCreate : null}
+          edit={permissions?.includes("pageEdit") ? PagesEdit : null}
+          show={permissions?.includes("pageView") ? PagesShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/blogPost"
+          options={{
+            label: "Blogs",
+            menuParent: "manageSite",
+          }}
+          list={
+            permissions?.includes("blogMenu") &&
+            permissions?.includes("blogPostView")
+              ? BlogList
+              : null
+          }
+          create={permissions?.includes("blogPostCreate") ? BlogCreate : null}
+          edit={permissions?.includes("blogPostEdit") ? BlogEdit : null}
+          show={permissions?.includes("blogPostView") ? BlogShow : null}
+          icon={DashIcon}
+        />,
         permissions?.includes("managePurchaseMenu") ? (
           <Resource
             name="managePurchase"
@@ -388,6 +528,124 @@ const AdminApp = () => {
           show={permissions?.includes("taxonomyView") ? TaxonomyShow : null}
           icon={DashIcon}
         />,
+        permissions?.includes("manageUserMenu") ? (
+          <Resource
+            name="manageUser"
+            options={{
+              label: "Manage User",
+              isMenuParent: true,
+            }}
+            icon={ManageUserIcon}
+          />
+        ) : null,
+        <Resource
+          name="v1/users"
+          options={{
+            label: "Users",
+            menuParent: "manageUser",
+          }}
+          list={
+            permissions?.includes("userMenu") &&
+            permissions?.includes("userView")
+              ? UserList
+              : null
+          }
+          create={permissions?.includes("userCreate") ? UserCreate : null}
+          edit={permissions?.includes("userEdit") ? UserEdit : null}
+          show={permissions?.includes("userView") ? UserShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/bulkUserCreateRequest"
+          options={{
+            label: "Bulk Users",
+            menuParent: "manageUser",
+          }}
+          list={
+            permissions?.includes("bulkUserCreateRequestMenu") &&
+            permissions?.includes("bulkUserCreateRequestView")
+              ? BulkUserList
+              : null
+          }
+          create={
+            permissions?.includes("bulkUserCreateRequestCreate")
+              ? BulkUserCreate
+              : null
+          }
+          show={
+            permissions?.includes("bulkUserCreateRequestView")
+              ? BulkUserShow
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/userCart"
+          options={{
+            label: "Carts",
+            menuParent: "manageUser",
+          }}
+          list={
+            permissions?.includes("userCartMenu") &&
+            permissions?.includes("userCartView")
+              ? CartList
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/userLocations"
+          options={{
+            label: "Addresses",
+            menuParent: "manageUser",
+          }}
+          list={
+            permissions?.includes("userLocationMenu") &&
+            permissions?.includes("userLocationView")
+              ? AddressList
+              : null
+          }
+          create={
+            permissions?.includes("userLocationCreate") ? AddressCreate : null
+          }
+          edit={permissions?.includes("userLocationEdit") ? AddressEdit : null}
+          show={permissions?.includes("userLocationView") ? AddressShow : null}
+          icon={DashIcon}
+        />,
+
+        permissions?.includes("prescriptionMenu") ? (
+          <Resource
+            name="prescriptions"
+            options={{
+              label: "Prescriptions",
+              menuParent: "manageUser",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ) : null,
+        permissions?.includes("permissionMenu") ? (
+          <Resource
+            name="permissions"
+            options={{
+              label: "Role Permissions",
+              menuParent: "manageUser",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ) : null,
+        permissions?.includes("permissionMenu") ? (
+          <Resource
+            name="permissions-list"
+            options={{
+              label: "Permissions List",
+              menuParent: "manageUser",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ) : null,
         permissions?.includes("manageB2BMenu") ? (
           <Resource
             name="manageB2B"
@@ -415,6 +673,222 @@ const AdminApp = () => {
           }
           edit={permissions?.includes("pharmacyEdit") ? PharmacyEdit : null}
           show={permissions?.includes("pharmacyView") ? PharmacyShow : null}
+          icon={DashIcon}
+        />,
+        permissions?.includes("manageDeliveryMenu") ? (
+          <Resource
+            name="manageDelivery"
+            options={{
+              label: "Manage Delivery",
+              isMenuParent: true,
+            }}
+            icon={ManageDeliveryIcon}
+          />
+        ) : null,
+
+        permissions?.includes("zoneMenuView") && (
+          <Resource
+            name="zone"
+            options={{
+              label: "Zone",
+              menuParent: "manageDelivery",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ),
+        <Resource
+          name="v1/location"
+          options={{
+            label: "Locations",
+            menuParent: "manageDelivery",
+          }}
+          list={
+            permissions?.includes("locationMenu") &&
+            permissions?.includes("locationView")
+              ? LocationList
+              : null
+          }
+          create={
+            permissions?.includes("locationCreate") ? LocationCreate : null
+          }
+          edit={permissions?.includes("locationEdit") ? LocationEdit : null}
+          show={permissions?.includes("locationView") ? LocationShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/subArea"
+          options={{
+            label: "Sub Area",
+            menuParent: "manageDelivery",
+          }}
+          list={
+            permissions?.includes("subAreaMenu") &&
+            permissions?.includes("subAreaView")
+              ? SubAreaList
+              : null
+          }
+          create={permissions?.includes("subAreaCreate") ? SubAreaCreate : null}
+          edit={permissions?.includes("subAreaEdit") ? SubAreaEdit : null}
+          show={permissions?.includes("subAreaView") ? SubAreaShow : null}
+          icon={DashIcon}
+        />,
+        permissions?.includes("tplCompanyView") && (
+          <Resource
+            name="v1/tplCompany"
+            options={{
+              label: "3PL List",
+              menuParent: "manageDelivery",
+            }}
+            list={ThreePlList}
+            create={ThreePlListCreate}
+            edit={ThreePlListEdit}
+            show={ThreePlListShow}
+            icon={DashIcon}
+          />
+        ),
+        <Resource
+          name="v1/shipmentBag"
+          options={{
+            label: "Bags",
+            menuParent: "manageDelivery",
+          }}
+          list={
+            permissions?.includes("shipmentBagMenu") &&
+            permissions?.includes("shipmentBagView")
+              ? BagList
+              : null
+          }
+          create={permissions?.includes("shipmentBagCreate") ? BagCreate : null}
+          edit={permissions?.includes("shipmentBagEdit") ? BagEdit : null}
+          show={permissions?.includes("shipmentBagView") ? BagShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/shipment"
+          options={{
+            label: "Shipment",
+            menuParent: "manageDelivery",
+          }}
+          list={
+            permissions?.includes("shipmentMenu") &&
+            permissions?.includes("shipmentView")
+              ? ShipmentList
+              : null
+          }
+          show={permissions?.includes("shipmentView") ? ShipmentShow : null}
+          edit={permissions?.includes("shipmentEdit") ? ShipmentEdit : null}
+          icon={DashIcon}
+        />,
+
+        permissions?.includes("viewDeliveryCompanyPerformance") && (
+          <Resource
+            name="v1/deliveryTimeBenchmark"
+            options={{
+              label: "3PL Delivery Time",
+              menuParent: "manageDelivery",
+            }}
+            list={DeliveryTimeBenchmarkList}
+            icon={DashIcon}
+          />
+        ),
+        permissions?.includes("manageWarehouseMenu") ? (
+          <Resource
+            name="manageWarehouse"
+            options={{
+              label: "Manage Warehouse",
+              isMenuParent: true,
+            }}
+            icon={ManageStockIcon}
+          />
+        ) : null,
+        <Resource
+          name="v1/warehouse"
+          options={{
+            label: "Warehouses",
+            menuParent: "manageWarehouse",
+          }}
+          list={
+            permissions?.includes("warehouseMenu") &&
+            permissions?.includes("warehouseView")
+              ? WarehouseList
+              : null
+          }
+          create={
+            permissions?.includes("warehouseCreate") ? WarehouseCreate : null
+          }
+          edit={permissions?.includes("warehouseEdit") ? WarehouseEdit : null}
+          show={permissions?.includes("warehouseView") ? WarehouseShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/stock"
+          options={{
+            label: "Stocks",
+            menuParent: "manageWarehouse",
+          }}
+          list={
+            permissions?.includes("stockMenu") &&
+            permissions?.includes("stockView")
+              ? StockList
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/productRequestStock"
+          options={{
+            label: "Request Stocks",
+            menuParent: "manageWarehouse",
+          }}
+          list={
+            permissions?.includes("productRequestStockMenu") &&
+            permissions?.includes("productRequestStockView")
+              ? RequestStockList
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/stockAudit"
+          options={{
+            label: "Audit System",
+            menuParent: "manageWarehouse",
+          }}
+          list={
+            permissions?.includes("stockAuditMenu") &&
+            permissions?.includes("stockAuditView")
+              ? AuditSystemList
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/qualityControl"
+          options={{
+            label: "QC List",
+            menuParent: "manageWarehouse",
+          }}
+          list={
+            permissions?.includes("qualityControlMenu") &&
+            permissions?.includes("qualityControlView")
+              ? QualityControlList
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/qcDashboard"
+          options={{
+            label: "QC Logistics",
+            menuParent: "manageWarehouse",
+          }}
+          list={
+            permissions?.includes("qcDashboardMenu") &&
+            permissions?.includes("qcDashboardView")
+              ? QCDashboardList
+              : null
+          }
           icon={DashIcon}
         />,
         permissions?.includes("managePromotionsMenu") && (
@@ -521,6 +995,27 @@ const AdminApp = () => {
           show={ApprovalCapShow}
           icon={DashIcon}
         />,
+        permissions?.includes("manageFlashSaleMenu") ? (
+          <Resource
+            name="manageFlashSale"
+            options={{
+              label: "Manage Flash Sale",
+              isMenuParent: true,
+            }}
+            icon={ManageFinanceIcon}
+          />
+        ) : null,
+        permissions?.includes("flashSalesMenu") && (
+          <Resource
+            name="flashSales"
+            options={{
+              label: "Flash Sales Setting",
+              menuParent: "manageFlashSale",
+            }}
+            list={FlashSalesSettingList}
+            icon={DashIcon}
+          />
+        ),
         permissions?.includes("manageAccountingMenu") ? (
           <Resource
             name="manageAccounting"
@@ -857,6 +1352,25 @@ const AdminApp = () => {
             icon={DashIcon}
           />
         ),
+        permissions?.includes("productReviewView") ? (
+          <Resource
+            name="manageReview"
+            options={{
+              label: "Manage Review",
+              isMenuParent: true,
+            }}
+            icon={ManageReview}
+          />
+        ) : null,
+        <Resource
+          name="productReview/pending"
+          options={{
+            label: "Product Review",
+            menuParent: "manageReview",
+          }}
+          list={ShowMenu}
+          icon={DashIcon}
+        />,
       ]}
     </Admin>
   );
