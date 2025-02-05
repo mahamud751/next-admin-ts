@@ -136,7 +136,7 @@ const UserEdit: FC<EditProps> = ({ permissions, ...rest }) => {
                 label="ID"
                 variant="outlined"
                 helperText={false}
-                disabled
+                readOnly
               />
               <TextInput
                 source="u_name"
@@ -207,28 +207,28 @@ const UserEdit: FC<EditProps> = ({ permissions, ...rest }) => {
                 label="Updated"
                 variant="outlined"
                 helperText={false}
-                disabled
+                readOnly
               />
               <NumberInput
                 source="u_cash"
                 label="Arogga Cash"
                 variant="outlined"
                 helperText={false}
-                disabled
+                readOnly
               />
               <NumberInput
                 source="u_cash_balance"
                 label="Cash Balance"
                 variant="outlined"
                 helperText={false}
-                disabled={!isRoleAdministrator}
+                readOnly={!isRoleAdministrator}
               />
               <NumberInput
                 source="u_bonus_balance"
                 label="Bonus Balance"
                 variant="outlined"
                 helperText={false}
-                disabled={!isRoleAdministrator}
+                readOnly={!isRoleAdministrator}
               />
               {/* <Grid container style={{ width: "100%" }}>
                                 <Grid item sm={2}>
@@ -238,7 +238,7 @@ const UserEdit: FC<EditProps> = ({ permissions, ...rest }) => {
                                         variant="outlined"
                                         helperText={false}
                                         style={{ width: 256 }}
-                                        disabled={!isRoleAdministrator}
+                                        readOnly={!isRoleAdministrator}
                                     />
                                 </Grid>
                                 <Grid item sm={1}>
@@ -278,7 +278,7 @@ const UserEdit: FC<EditProps> = ({ permissions, ...rest }) => {
                 label="Pending Cash"
                 variant="outlined"
                 helperText={false}
-                disabled
+                readOnly
               />
               <NumberInput
                 source="u_otp"

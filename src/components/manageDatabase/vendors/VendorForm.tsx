@@ -25,6 +25,7 @@ import {
 // import UserEmployeeOptionTextRenderer from "../../UserEmployeeOptionTextRenderer";
 import InlineArrayInput from "@/components/common/InlineArrayInput";
 import TaxonomiesByVocabularyInput from "@/components/common/TaxonomiesByVocabularyInput";
+import UserEmployeeOptionTextRenderer from "@/components/common/UserEmployeeOptionTextRenderer";
 
 const VendorForm = () => {
   const values = useWatch();
@@ -33,23 +34,25 @@ const VendorForm = () => {
   useEffect(() => {
     if (!values.v_id) return;
 
-    setValue.change(
+    setValue(
       "v_email",
-      isArray(values.v_email) ? values.v_email?.map((value) => ({ value })) : []
+      isArray(values?.v_email)
+        ? values.v_email?.map((value) => ({ value }))
+        : []
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Grid container spacing={1}>
-      {values.v_id && (
+      {values?.v_id && (
         <Grid item sm={6} md={3}>
           <TextInput
             source="v_id"
             label="ID"
             variant="outlined"
             helperText={false}
-            disabled
+            readOnly
             fullWidth
             validate={[required()]}
           />
@@ -83,7 +86,7 @@ const VendorForm = () => {
           variant="outlined"
           helperText={false}
           reference="v1/users"
-          validate={[required()]}
+          isRequired
           fullWidth
         >
           <AutocompleteInput
@@ -91,7 +94,6 @@ const VendorForm = () => {
             helperText={false}
             optionText={<UserEmployeeOptionTextRenderer />}
             inputText={userEmployeeInputTextRenderer}
-            resettable
           />
         </ReferenceInput>
       </Grid>
@@ -102,7 +104,7 @@ const VendorForm = () => {
           variant="outlined"
           helperText={false}
           reference="v1/users"
-          validate={[required()]}
+          isRequired
           fullWidth
         >
           <AutocompleteInput
@@ -110,7 +112,6 @@ const VendorForm = () => {
             helperText={false}
             // optionText={<UserEmployeeOptionTextRenderer />}
             inputText={userEmployeeInputTextRenderer}
-            resettable
           />
         </ReferenceInput>
       </Grid>
@@ -228,13 +229,12 @@ const VendorForm = () => {
               matchSuggestion={() => true}
               // TODO: Refactor this in future
               optionText={(record) => `${record?.b_name} (${record?.b_branch})`}
-              options={{
-                InputProps: {
-                  multiline: true,
-                },
-              }}
+              // options={{
+              //   InputProps: {
+              //     multiline: true,
+              //   },
+              // }}
               helperText={false}
-              resettable
             />
           </ReferenceInput>
         </Grid>
@@ -341,7 +341,10 @@ const VendorForm = () => {
       <FileInput
         source="attachedFiles_v_trade_licence"
         label="Trade license"
-        accept="image/*, application/pdf"
+        accept={{
+          "application/pdf": [".pdf"],
+          "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+        }}
         maxSize={FILE_MAX_SIZE}
         validate={[required()]}
       >
@@ -351,7 +354,10 @@ const VendorForm = () => {
       <FileInput
         source="attachedFiles_v_tin_file"
         label="TIN or BIN"
-        accept="image/*, application/pdf"
+        accept={{
+          "application/pdf": [".pdf"],
+          "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+        }}
         validate={[required()]}
         maxSize={FILE_MAX_SIZE}
       >
@@ -361,7 +367,10 @@ const VendorForm = () => {
       <FileInput
         source="attachedFiles_v_bank_detail"
         label="Bank details"
-        accept="image/*, application/pdf"
+        accept={{
+          "application/pdf": [".pdf"],
+          "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+        }}
         validate={[required()]}
         maxSize={FILE_MAX_SIZE}
       >
@@ -371,7 +380,10 @@ const VendorForm = () => {
       <FileInput
         source="attachedFiles_v_agreement"
         label="Agreement File"
-        accept="image/*, application/pdf"
+        accept={{
+          "application/pdf": [".pdf"],
+          "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+        }}
         validate={[required()]}
         maxSize={FILE_MAX_SIZE}
       >
@@ -380,7 +392,10 @@ const VendorForm = () => {
 
       <FileInput
         source="attachedFiles_v_mushak"
-        accept="image/*, application/pdf"
+        accept={{
+          "application/pdf": [".pdf"],
+          "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+        }}
         label="Mushak 6.3"
         maxSize={FILE_MAX_SIZE}
       >
@@ -390,7 +405,10 @@ const VendorForm = () => {
       <FileInput
         source="attachedFiles_v_tds"
         label="TDS Certificate"
-        accept="image/*, application/pdf"
+        accept={{
+          "application/pdf": [".pdf"],
+          "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+        }}
         maxSize={FILE_MAX_SIZE}
       >
         <FileField source="src" title="title" target="_blank" />

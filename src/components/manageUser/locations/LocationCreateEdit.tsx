@@ -208,7 +208,7 @@ const LocationCreateEdit: FC<LocationCreateEditProps> = ({
             validate={[required()]}
             fullWidth
             onChange={(e) => handleInputChangeOnCreate(e.target.value)}
-            disabled={!values.l_division && !values.l_district}
+            readOnly={!values.l_division && !values.l_district}
           />
         )}
         {inputValue && (

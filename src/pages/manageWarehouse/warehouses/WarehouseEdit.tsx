@@ -32,7 +32,7 @@ const WarehouseEdit: FC<EditProps> = (props) => {
           label="ID"
           variant="outlined"
           helperText={false}
-          disabled
+          readOnly
         />
         <TextInput
           source="w_title"

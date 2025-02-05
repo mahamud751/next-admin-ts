@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Edit, EditProps, SimpleForm, TransformData } from "react-admin";
 
-import SaveDeleteToolbar from "../../../components/SaveDeleteToolbar";
-import VendorForm from "../../../components/manageDatabase/vendors/VendorForm";
-import { useDocumentTitle } from "../../../hooks";
+import { useDocumentTitle } from "@/hooks";
+import SaveDeleteToolbar from "@/components/common/SaveDeleteToolbar";
+import VendorForm from "@/components/manageDatabase/vendors/VendorForm";
 
 const transform: TransformData = ({ v_email, ...rest }) => ({
   ...rest,

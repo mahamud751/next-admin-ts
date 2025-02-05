@@ -4,7 +4,7 @@ import jsonServerProvider from "ra-data-json-server";
 import { UserList } from "./User/UserList";
 import dataProvider from "@/dataProvider";
 import LoginPage from "@/app/loginPage";
-import { VendorCreate } from "./User/VendorCreate";
+
 import { useClarity, useCacheBuster, useKeyboardShortcut } from "@/hooks";
 import { SocketServer } from "@/utils/enums";
 import { logger, isJSONParsable } from "@/utils/helpers";
@@ -27,6 +27,7 @@ import {
   ManageDatabaseIcon,
   ManageDeliveryIcon,
   ManageFinanceIcon,
+  ManageHRIcon,
   ManageLabTestIcon,
   ManagePromotionsIcon,
   ManagePurchaseIcon,
@@ -237,6 +238,126 @@ import { RequestStockList } from "@/pages/manageWarehouse/requestStocks";
 import AuditSystemList from "@/pages/manageWarehouse/auditSystem/AuditSystemList";
 import { QCDashboardList } from "@/pages/manageWarehouse/qcDashboard";
 import { QualityControlList } from "@/pages/manageWarehouse/qualityControl";
+import ThreePlCollectionList from "@/pages/manageFinance/threePlCollection/ThreePlCollectionList";
+import ThreePlCashCollection from "@/pages/manageFinance/threePlCollection/ThreePlCashCollection";
+import ThreePlViewDetailsShow from "@/pages/manageFinance/threePlCollection/ThreePlViewDetailsShow";
+import {
+  CollectionList,
+  CollectionShow,
+} from "@/pages/manageFinance/collections";
+import {
+  LedgerCreate,
+  LedgerEdit,
+  LedgerList,
+  LedgerShow,
+} from "@/pages/manageFinance/ledgers";
+import { UserTransactionList } from "@/pages/manageFinance/userTransactions";
+import {
+  DailyReportCreate,
+  DailyReportEdit,
+  DailyReportList,
+  DailyReportShow,
+} from "@/pages/manageFinance/dailyReports";
+import ProductReview from "@/pages/manageReview/productReview";
+import DailyReports2Page from "@/pages/manageFinance/dailyReports2";
+import {
+  VendorCreate,
+  VendorEdit,
+  VendorList,
+  VendorShow,
+} from "@/pages/manageDatabase/vendors";
+import {
+  VariantCreate,
+  VariantEdit,
+  VariantList,
+  VariantShow,
+} from "@/pages/manageDatabase/variants";
+import {
+  GenericCreate,
+  GenericEdit,
+  GenericList,
+  GenericShow,
+} from "@/pages/manageDatabase/generics";
+
+import {
+  EmployeeCreate,
+  EmployeeEdit,
+  EmployeeList,
+  EmployeeShow,
+} from "@/pages/manageHR/employees";
+import EmployeeBankList from "@/pages/manageHR/employeeBanks/EmployeeBankList";
+import EmployeeBankCreate from "@/pages/manageHR/employeeBanks/EmployeeBankCreate";
+import EmployeeBankEdit from "@/pages/manageHR/employeeBanks/EmployeeBankEdit";
+import EmployeeBankShow from "@/pages/manageHR/employeeBanks/EmployeeBankShow";
+import {
+  EmployeeLeaveCreate,
+  EmployeeLeaveList,
+} from "@/pages/manageHR/employeeLeaves";
+import {
+  SalaryCreate,
+  SalaryEdit,
+  SalaryList,
+  SalaryShow,
+} from "@/pages/manageHR/salaries";
+import {
+  EmployeeLoanCreate,
+  EmployeeLoanEdit,
+  EmployeeLoanList,
+  EmployeeLoanShow,
+} from "@/pages/manageHR/employeeLoans";
+import {
+  HolidayCreate,
+  HolidayEdit,
+  HolidayList,
+  HolidayShow,
+} from "@/pages/manageHR/holidays";
+import {
+  ShiftCreate,
+  ShiftEdit,
+  ShiftList,
+  ShiftShow,
+} from "@/pages/manageHR/shifts";
+import {
+  ShiftScheduleEdit,
+  ShiftScheduleList,
+  ShiftScheduleShow,
+} from "@/pages/manageHR/shiftSchedules";
+import {
+  BankCreate,
+  BankEdit,
+  BankList,
+  BankShow,
+} from "@/pages/manageHR/banks";
+import {
+  AttendanceEdit,
+  AttendanceList,
+  AttendanceShow,
+} from "@/pages/manageHR/attendances";
+import { JobCreate, JobEdit, JobList, JobShow } from "@/pages/manageHR/jobs";
+import {
+  ApplicantCreate,
+  ApplicantEdit,
+  ApplicantList,
+  ApplicantShow,
+} from "@/pages/manageHR/applicants";
+import {
+  PolicyCreate,
+  PolicyEdit,
+  PolicyList,
+  PolicyShow,
+} from "@/pages/manageHR/policies";
+import {
+  CircularCreate,
+  CircularEdit,
+  CircularList,
+  CircularShow,
+} from "@/pages/manageHR/circulars";
+import {
+  EmployeeInfoCreate,
+  EmployeeInfoEdit,
+  EmployeeInfoList,
+  EmployeeInfoShow,
+} from "@/pages/manageHR/employeeInfos";
 
 const AdminApp = () => {
   useClarity();
@@ -367,7 +488,42 @@ const AdminApp = () => {
           }
           icon={DashIcon}
         />,
-
+        <Resource
+          name="v1/variantType"
+          options={{
+            label: "Variants",
+            menuParent: "manageDatabase",
+          }}
+          list={
+            permissions?.includes("variantTypeMenu") &&
+            permissions?.includes("variantTypeView")
+              ? VariantList
+              : null
+          }
+          create={
+            permissions?.includes("variantTypeCreate") ? VariantCreate : null
+          }
+          edit={permissions?.includes("variantTypeEdit") ? VariantEdit : null}
+          show={permissions?.includes("variantTypeView") ? VariantShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/vendor"
+          options={{
+            label: "Vendors",
+            menuParent: "manageDatabase",
+          }}
+          list={
+            permissions?.includes("vendorMenu") &&
+            permissions?.includes("vendorView")
+              ? VendorList
+              : null
+          }
+          create={permissions?.includes("vendorCreate") ? VendorCreate : null}
+          edit={permissions?.includes("vendorEdit") ? VendorEdit : null}
+          show={permissions?.includes("vendorView") ? VendorShow : null}
+          icon={DashIcon}
+        />,
         <Resource
           name="v1/productBrand"
           options={{
@@ -385,6 +541,23 @@ const AdminApp = () => {
           }
           edit={permissions?.includes("productBrandEdit") ? BrandEdit : null}
           show={permissions?.includes("productBrandView") ? BrandShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/generics"
+          options={{
+            label: "Generics",
+            menuParent: "manageDatabase",
+          }}
+          list={
+            permissions?.includes("genericMenu") &
+            permissions?.includes("genericView")
+              ? GenericList
+              : null
+          }
+          create={permissions?.includes("genericCreate") ? GenericCreate : null}
+          edit={permissions?.includes("genericEdit") ? GenericEdit : null}
+          show={permissions?.includes("genericView") ? GenericShow : null}
           icon={DashIcon}
         />,
         permissions?.includes("manageSiteMenu") ? (
@@ -478,6 +651,369 @@ const AdminApp = () => {
           edit={
             permissions?.includes("productPurchaseEdit") ? PurchaseEdit : null
           }
+          icon={DashIcon}
+        />,
+        permissions?.includes("manageHrMenu") ? (
+          <Resource
+            name="manageHr"
+            options={{
+              label: "Manage HR",
+              isMenuParent: true,
+            }}
+            icon={ManageHRIcon}
+          />
+        ) : null,
+        permissions?.includes("employeeAttendanceMenu") ? (
+          <Resource
+            name="employeeDashboard"
+            options={{
+              label: "Employee Dashboard",
+              menuParent: "manageHr",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ) : null,
+        permissions?.includes("employeeHierarchyMenu") ? (
+          <Resource
+            name="employeeHierarchy"
+            options={{
+              label: "Employee Hierarchy",
+              menuParent: "manageHr",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ) : null,
+        <Resource
+          name="v1/employee"
+          options={{
+            label: "Employees",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("employeeMenu") &&
+            permissions?.includes("employeeView")
+              ? EmployeeList
+              : null
+          }
+          create={
+            permissions?.includes("employeeCreate") ? EmployeeCreate : null
+          }
+          edit={permissions?.includes("employeeEdit") ? EmployeeEdit : null}
+          show={permissions?.includes("employeeView") ? EmployeeShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/employeeInfo"
+          options={{
+            label: "Employee Infos",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("employeeInfoMenu") &&
+            permissions?.includes("employeeInfoView")
+              ? EmployeeInfoList
+              : null
+          }
+          create={
+            permissions?.includes("employeeInfoCreate")
+              ? EmployeeInfoCreate
+              : null
+          }
+          edit={
+            permissions?.includes("employeeInfoEdit") ? EmployeeInfoEdit : null
+          }
+          show={
+            permissions?.includes("employeeInfoView") ? EmployeeInfoShow : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/employeeBank"
+          options={{
+            label: "Employee Banks",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("employeeBankMenu") &&
+            permissions?.includes("employeeBankView")
+              ? EmployeeBankList
+              : null
+          }
+          create={
+            permissions?.includes("employeeBankCreate")
+              ? EmployeeBankCreate
+              : null
+          }
+          edit={
+            permissions?.includes("employeeBankEdit") ? EmployeeBankEdit : null
+          }
+          show={
+            permissions?.includes("employeeBankView") ? EmployeeBankShow : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/employeeLeave"
+          options={{
+            label: "Leaves",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("employeeLeaveMenu") &&
+            permissions?.includes("employeeLeaveView")
+              ? EmployeeLeaveList
+              : null
+          }
+          create={
+            permissions?.includes("employeeLeaveCreate")
+              ? EmployeeLeaveCreate
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/salary"
+          options={{
+            label: "Salaries",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("salaryMenu") &&
+            permissions?.includes("salaryView")
+              ? SalaryList
+              : null
+          }
+          create={
+            permissions?.includes("salaryAdjustmentCreate")
+              ? SalaryCreate
+              : null
+          }
+          edit={
+            permissions?.includes("salaryAdjustmentEdit") ? SalaryEdit : null
+          }
+          show={permissions?.includes("salaryView") ? SalaryShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/employeeLoan"
+          options={{
+            label: "Loans",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("employeeLoanMenu") &&
+            permissions?.includes("employeeLoanView")
+              ? EmployeeLoanList
+              : null
+          }
+          create={
+            permissions?.includes("employeeLoanCreate")
+              ? EmployeeLoanCreate
+              : null
+          }
+          edit={
+            permissions?.includes("employeeLoanEdit") ? EmployeeLoanEdit : null
+          }
+          show={
+            permissions?.includes("employeeLoanView") ? EmployeeLoanShow : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/holiday"
+          options={{
+            label: "Holidays",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("holidayMenu") &&
+            permissions?.includes("holidayView")
+              ? HolidayList
+              : null
+          }
+          create={permissions?.includes("holidayCreate") ? HolidayCreate : null}
+          edit={permissions?.includes("holidayEdit") ? HolidayEdit : null}
+          show={permissions?.includes("holidayView") ? HolidayShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/shift"
+          options={{
+            label: "Shifts",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("shiftMenu") &&
+            permissions?.includes("shiftView")
+              ? ShiftList
+              : null
+          }
+          create={permissions?.includes("shiftCreate") ? ShiftCreate : null}
+          edit={permissions?.includes("shiftEdit") ? ShiftEdit : null}
+          show={permissions?.includes("shiftView") ? ShiftShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/shiftSchedule"
+          options={{
+            label: "Shift Schedules",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("shiftScheduleMenu") &&
+            permissions?.includes("shiftScheduleView")
+              ? ShiftScheduleList
+              : null
+          }
+          edit={
+            permissions?.includes("shiftScheduleEdit")
+              ? ShiftScheduleEdit
+              : null
+          }
+          show={
+            permissions?.includes("shiftScheduleView")
+              ? ShiftScheduleShow
+              : null
+          }
+          icon={DashIcon}
+        />,
+        permissions?.includes("departmentMenu") && (
+          <Resource
+            name="departments"
+            options={{
+              label: "Departments",
+              menuParent: "manageHr",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ),
+        permissions?.includes("rankMenu") && (
+          <Resource
+            name="designations"
+            options={{
+              label: "Designations",
+              menuParent: "manageHr",
+            }}
+            list={ShowMenu}
+            icon={DashIcon}
+          />
+        ),
+        <Resource
+          name="v1/bank"
+          options={{
+            label: "Banks",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("bankMenu") &&
+            permissions?.includes("bankView")
+              ? BankList
+              : null
+          }
+          create={permissions?.includes("bankCreate") ? BankCreate : null}
+          edit={permissions?.includes("bankEdit") ? BankEdit : null}
+          show={permissions?.includes("bankView") ? BankShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/employeeAttendance"
+          options={{
+            label: "Attendances",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("employeeAttendanceMenu") &&
+            permissions?.includes("employeeAttendanceView")
+              ? AttendanceList
+              : null
+          }
+          edit={
+            permissions?.includes("employeeAttendanceEdit")
+              ? AttendanceEdit
+              : null
+          }
+          show={
+            permissions?.includes("employeeAttendanceView")
+              ? AttendanceShow
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/job"
+          options={{ label: "Jobs", menuParent: "manageHr" }}
+          list={
+            permissions?.includes("jobMenu") && permissions?.includes("jobView")
+              ? JobList
+              : null
+          }
+          create={permissions?.includes("jobCreate") ? JobCreate : null}
+          edit={permissions?.includes("jobEdit") ? JobEdit : null}
+          show={permissions?.includes("jobView") ? JobShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/jobApplications"
+          options={{
+            label: "Applicants",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("jobApplicationMenu") &&
+            permissions?.includes("jobApplicationView")
+              ? ApplicantList
+              : null
+          }
+          create={
+            permissions?.includes("jobApplicationCreate")
+              ? ApplicantCreate
+              : null
+          }
+          edit={
+            permissions?.includes("jobApplicationEdit") ? ApplicantEdit : null
+          }
+          show={
+            permissions?.includes("jobApplicationView") ? ApplicantShow : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/policy"
+          options={{
+            label: "Policies",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("policyMenu") &&
+            permissions?.includes("policyView")
+              ? PolicyList
+              : null
+          }
+          create={permissions?.includes("policyCreate") ? PolicyCreate : null}
+          edit={permissions?.includes("policyEdit") ? PolicyEdit : null}
+          show={permissions?.includes("policyView") ? PolicyShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/circular"
+          options={{
+            label: "Circulars",
+            menuParent: "manageHr",
+          }}
+          list={
+            permissions?.includes("circularMenu") &&
+            permissions?.includes("circularView")
+              ? CircularList
+              : null
+          }
+          create={
+            permissions?.includes("circularCreate") ? CircularCreate : null
+          }
+          edit={permissions?.includes("circularEdit") ? CircularEdit : null}
+          show={permissions?.includes("circularView") ? CircularShow : null}
           icon={DashIcon}
         />,
         permissions?.includes("manageTaxonomyMenu") ? (
@@ -995,6 +1531,129 @@ const AdminApp = () => {
           show={ApprovalCapShow}
           icon={DashIcon}
         />,
+        permissions?.includes("manageFinanceMenu") ? (
+          <Resource
+            name="manageFinance"
+            options={{
+              label: "Manage Finance",
+              isMenuParent: true,
+            }}
+            icon={ManageFinanceIcon}
+          />
+        ) : null,
+        <Resource
+          name="v1/tplCollection"
+          options={{
+            label: "3PL Collections",
+            menuParent: "manageFinance",
+          }}
+          list={
+            permissions?.includes("view3PLCollection") ||
+            permissions?.includes("viewAll3PLCollection")
+              ? ThreePlCollectionList
+              : null
+          }
+          create={
+            permissions?.includes("submit3PLCollection") &&
+            ThreePlCashCollection
+          }
+          show={ThreePlViewDetailsShow}
+          icon={DashIcon}
+        />,
+
+        <Resource
+          name="v1/cashCollection"
+          options={{
+            label: "Collections",
+            menuParent: "manageFinance",
+          }}
+          list={
+            permissions?.includes("collectionMenu") &&
+            permissions?.includes("collectionView")
+              ? CollectionList
+              : null
+          }
+          show={permissions?.includes("collectionView") ? CollectionShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/ledger"
+          options={{
+            label: "Ledgers",
+            menuParent: "manageFinance",
+          }}
+          list={
+            permissions?.includes("ledgerMenu") &&
+            permissions?.includes("ledgerView")
+              ? LedgerList
+              : null
+          }
+          create={permissions?.includes("ledgerCreate") ? LedgerCreate : null}
+          edit={permissions?.includes("ledgerEdit") ? LedgerEdit : null}
+          show={permissions?.includes("ledgerView") ? LedgerShow : null}
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/userTransaction"
+          options={{
+            label: "User Transactions",
+            menuParent: "manageFinance",
+          }}
+          list={
+            permissions?.includes("userTransactionMenu") &&
+            permissions?.includes("userTransactionView")
+              ? UserTransactionList
+              : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="v1/daily-report"
+          options={{
+            label: "Daily Reports",
+            menuParent: "manageFinance",
+          }}
+          list={
+            permissions?.includes("dailyReportMenu") &&
+            permissions?.includes("dailyReportView")
+              ? DailyReportList
+              : null
+          }
+          create={
+            permissions?.includes("dailyReportCreate")
+              ? DailyReportCreate
+              : null
+          }
+          edit={
+            permissions?.includes("dailyReportEdit") ? DailyReportEdit : null
+          }
+          show={
+            permissions?.includes("dailyReportView") ? DailyReportShow : null
+          }
+          icon={DashIcon}
+        />,
+        <Resource
+          name="daily-reports-2"
+          options={{
+            label: "Daily Reports 2",
+            menuParent: "manageFinance",
+          }}
+          list={DailyReports2Page}
+          icon={DashIcon}
+        />,
+        permissions?.includes("dailyReportMenu") &&
+          permissions?.includes("dailyReportView") && (
+            <Resource
+              name="daily-reports-2"
+              options={{
+                label: "Daily Reports 2",
+                menuParent: "manageFinance",
+              }}
+              list={ShowMenu}
+              icon={DashIcon}
+            />
+          ),
+
         permissions?.includes("manageFlashSaleMenu") ? (
           <Resource
             name="manageFlashSale"
@@ -1352,6 +2011,7 @@ const AdminApp = () => {
             icon={DashIcon}
           />
         ),
+
         permissions?.includes("productReviewView") ? (
           <Resource
             name="manageReview"
@@ -1362,13 +2022,14 @@ const AdminApp = () => {
             icon={ManageReview}
           />
         ) : null,
+
         <Resource
           name="productReview/pending"
           options={{
             label: "Product Review",
             menuParent: "manageReview",
           }}
-          list={ShowMenu}
+          list={ProductReview}
           icon={DashIcon}
         />,
       ]}

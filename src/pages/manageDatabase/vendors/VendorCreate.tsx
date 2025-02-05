@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Create, CreateProps, SimpleForm, TransformData } from "react-admin";
 
-import VendorForm from "../../../components/manageDatabase/vendors/VendorForm";
-import { useDocumentTitle } from "../../../hooks";
+import VendorForm from "@/components/manageDatabase/vendors/VendorForm";
+import { useDocumentTitle } from "@/hooks";
 
 const transform: TransformData = ({ v_email, ...rest }) => ({
   ...rest,
@@ -13,16 +13,20 @@ const VendorCreate: FC<CreateProps> = (props) => {
   useDocumentTitle("Arogga | Vendor Create");
 
   return (
-    <Create {...props} transform={transform} redirect="list">
-      <SimpleForm
-        initialValues={{
-          v_email: [
-            {
-              value: "",
-            },
-          ],
-        }}
-      >
+    <Create
+      {...props}
+      transform={transform}
+      redirect="list"
+      defaultValue={{
+        //@ts-ignore
+        v_email: [
+          {
+            value: "",
+          },
+        ],
+      }}
+    >
+      <SimpleForm>
         <VendorForm />
       </SimpleForm>
     </Create>
